@@ -1,0 +1,608 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> snbt
+Rule 1     snbt -> compound
+Rule 2     compound -> LBRACE key_value_pairs RBRACE
+Rule 3     compound -> LBRACE RBRACE
+Rule 4     key_value_pairs -> key_value_pairs key_value_pair
+Rule 5     key_value_pairs -> key_value_pairs COMMA key_value_pair
+Rule 6     key_value_pairs -> key_value_pair
+Rule 7     key_value_pair -> NAME COLON value
+Rule 8     key_value_pair -> STRING COLON value
+Rule 9     value -> compound
+Rule 10    value -> array
+Rule 11    value -> BOOL
+Rule 12    value -> BYTE
+Rule 13    value -> DOUBLE
+Rule 14    value -> LONG
+Rule 15    value -> INTEGER
+Rule 16    value -> STRING
+Rule 17    array -> LBRACKET values RBRACKET
+Rule 18    array -> LBRACKET RBRACKET
+Rule 19    values -> values value
+Rule 20    values -> values COMMA value
+Rule 21    values -> value
+
+Terminals, with rules where they appear
+
+BOOL                 : 11
+BYTE                 : 12
+COLON                : 7 8
+COMMA                : 5 20
+DOUBLE               : 13
+INTEGER              : 15
+LBRACE               : 2 3
+LBRACKET             : 17 18
+LONG                 : 14
+NAME                 : 7
+RBRACE               : 2 3
+RBRACKET             : 17 18
+STRING               : 8 16
+error                : 
+
+Nonterminals, with rules where they appear
+
+array                : 10
+compound             : 1 9
+key_value_pair       : 4 5 6
+key_value_pairs      : 2 4 5
+snbt                 : 0
+value                : 7 8 19 20 21
+values               : 17 19 20
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . snbt
+    (1) snbt -> . compound
+    (2) compound -> . LBRACE key_value_pairs RBRACE
+    (3) compound -> . LBRACE RBRACE
+
+    LBRACE          shift and go to state 3
+
+    snbt                           shift and go to state 1
+    compound                       shift and go to state 2
+
+state 1
+
+    (0) S' -> snbt .
+
+
+
+state 2
+
+    (1) snbt -> compound .
+
+    $end            reduce using rule 1 (snbt -> compound .)
+
+
+state 3
+
+    (2) compound -> LBRACE . key_value_pairs RBRACE
+    (3) compound -> LBRACE . RBRACE
+    (4) key_value_pairs -> . key_value_pairs key_value_pair
+    (5) key_value_pairs -> . key_value_pairs COMMA key_value_pair
+    (6) key_value_pairs -> . key_value_pair
+    (7) key_value_pair -> . NAME COLON value
+    (8) key_value_pair -> . STRING COLON value
+
+    RBRACE          shift and go to state 5
+    NAME            shift and go to state 7
+    STRING          shift and go to state 8
+
+    key_value_pairs                shift and go to state 4
+    key_value_pair                 shift and go to state 6
+
+state 4
+
+    (2) compound -> LBRACE key_value_pairs . RBRACE
+    (4) key_value_pairs -> key_value_pairs . key_value_pair
+    (5) key_value_pairs -> key_value_pairs . COMMA key_value_pair
+    (7) key_value_pair -> . NAME COLON value
+    (8) key_value_pair -> . STRING COLON value
+
+    RBRACE          shift and go to state 9
+    COMMA           shift and go to state 11
+    NAME            shift and go to state 7
+    STRING          shift and go to state 8
+
+    key_value_pair                 shift and go to state 10
+
+state 5
+
+    (3) compound -> LBRACE RBRACE .
+
+    $end            reduce using rule 3 (compound -> LBRACE RBRACE .)
+    RBRACE          reduce using rule 3 (compound -> LBRACE RBRACE .)
+    COMMA           reduce using rule 3 (compound -> LBRACE RBRACE .)
+    NAME            reduce using rule 3 (compound -> LBRACE RBRACE .)
+    STRING          reduce using rule 3 (compound -> LBRACE RBRACE .)
+    RBRACKET        reduce using rule 3 (compound -> LBRACE RBRACE .)
+    BOOL            reduce using rule 3 (compound -> LBRACE RBRACE .)
+    BYTE            reduce using rule 3 (compound -> LBRACE RBRACE .)
+    DOUBLE          reduce using rule 3 (compound -> LBRACE RBRACE .)
+    LONG            reduce using rule 3 (compound -> LBRACE RBRACE .)
+    INTEGER         reduce using rule 3 (compound -> LBRACE RBRACE .)
+    LBRACE          reduce using rule 3 (compound -> LBRACE RBRACE .)
+    LBRACKET        reduce using rule 3 (compound -> LBRACE RBRACE .)
+
+
+state 6
+
+    (6) key_value_pairs -> key_value_pair .
+
+    RBRACE          reduce using rule 6 (key_value_pairs -> key_value_pair .)
+    COMMA           reduce using rule 6 (key_value_pairs -> key_value_pair .)
+    NAME            reduce using rule 6 (key_value_pairs -> key_value_pair .)
+    STRING          reduce using rule 6 (key_value_pairs -> key_value_pair .)
+
+
+state 7
+
+    (7) key_value_pair -> NAME . COLON value
+
+    COLON           shift and go to state 12
+
+
+state 8
+
+    (8) key_value_pair -> STRING . COLON value
+
+    COLON           shift and go to state 13
+
+
+state 9
+
+    (2) compound -> LBRACE key_value_pairs RBRACE .
+
+    $end            reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    RBRACE          reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    COMMA           reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    NAME            reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    STRING          reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    RBRACKET        reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    BOOL            reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    BYTE            reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    DOUBLE          reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    LONG            reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    INTEGER         reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    LBRACE          reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+    LBRACKET        reduce using rule 2 (compound -> LBRACE key_value_pairs RBRACE .)
+
+
+state 10
+
+    (4) key_value_pairs -> key_value_pairs key_value_pair .
+
+    RBRACE          reduce using rule 4 (key_value_pairs -> key_value_pairs key_value_pair .)
+    COMMA           reduce using rule 4 (key_value_pairs -> key_value_pairs key_value_pair .)
+    NAME            reduce using rule 4 (key_value_pairs -> key_value_pairs key_value_pair .)
+    STRING          reduce using rule 4 (key_value_pairs -> key_value_pairs key_value_pair .)
+
+
+state 11
+
+    (5) key_value_pairs -> key_value_pairs COMMA . key_value_pair
+    (7) key_value_pair -> . NAME COLON value
+    (8) key_value_pair -> . STRING COLON value
+
+    NAME            shift and go to state 7
+    STRING          shift and go to state 8
+
+    key_value_pair                 shift and go to state 14
+
+state 12
+
+    (7) key_value_pair -> NAME COLON . value
+    (9) value -> . compound
+    (10) value -> . array
+    (11) value -> . BOOL
+    (12) value -> . BYTE
+    (13) value -> . DOUBLE
+    (14) value -> . LONG
+    (15) value -> . INTEGER
+    (16) value -> . STRING
+    (2) compound -> . LBRACE key_value_pairs RBRACE
+    (3) compound -> . LBRACE RBRACE
+    (17) array -> . LBRACKET values RBRACKET
+    (18) array -> . LBRACKET RBRACKET
+
+    BOOL            shift and go to state 18
+    BYTE            shift and go to state 19
+    DOUBLE          shift and go to state 20
+    LONG            shift and go to state 21
+    INTEGER         shift and go to state 22
+    STRING          shift and go to state 23
+    LBRACE          shift and go to state 3
+    LBRACKET        shift and go to state 24
+
+    value                          shift and go to state 15
+    compound                       shift and go to state 16
+    array                          shift and go to state 17
+
+state 13
+
+    (8) key_value_pair -> STRING COLON . value
+    (9) value -> . compound
+    (10) value -> . array
+    (11) value -> . BOOL
+    (12) value -> . BYTE
+    (13) value -> . DOUBLE
+    (14) value -> . LONG
+    (15) value -> . INTEGER
+    (16) value -> . STRING
+    (2) compound -> . LBRACE key_value_pairs RBRACE
+    (3) compound -> . LBRACE RBRACE
+    (17) array -> . LBRACKET values RBRACKET
+    (18) array -> . LBRACKET RBRACKET
+
+    BOOL            shift and go to state 18
+    BYTE            shift and go to state 19
+    DOUBLE          shift and go to state 20
+    LONG            shift and go to state 21
+    INTEGER         shift and go to state 22
+    STRING          shift and go to state 23
+    LBRACE          shift and go to state 3
+    LBRACKET        shift and go to state 24
+
+    value                          shift and go to state 25
+    compound                       shift and go to state 16
+    array                          shift and go to state 17
+
+state 14
+
+    (5) key_value_pairs -> key_value_pairs COMMA key_value_pair .
+
+    RBRACE          reduce using rule 5 (key_value_pairs -> key_value_pairs COMMA key_value_pair .)
+    COMMA           reduce using rule 5 (key_value_pairs -> key_value_pairs COMMA key_value_pair .)
+    NAME            reduce using rule 5 (key_value_pairs -> key_value_pairs COMMA key_value_pair .)
+    STRING          reduce using rule 5 (key_value_pairs -> key_value_pairs COMMA key_value_pair .)
+
+
+state 15
+
+    (7) key_value_pair -> NAME COLON value .
+
+    RBRACE          reduce using rule 7 (key_value_pair -> NAME COLON value .)
+    COMMA           reduce using rule 7 (key_value_pair -> NAME COLON value .)
+    NAME            reduce using rule 7 (key_value_pair -> NAME COLON value .)
+    STRING          reduce using rule 7 (key_value_pair -> NAME COLON value .)
+
+
+state 16
+
+    (9) value -> compound .
+
+    RBRACE          reduce using rule 9 (value -> compound .)
+    COMMA           reduce using rule 9 (value -> compound .)
+    NAME            reduce using rule 9 (value -> compound .)
+    STRING          reduce using rule 9 (value -> compound .)
+    RBRACKET        reduce using rule 9 (value -> compound .)
+    BOOL            reduce using rule 9 (value -> compound .)
+    BYTE            reduce using rule 9 (value -> compound .)
+    DOUBLE          reduce using rule 9 (value -> compound .)
+    LONG            reduce using rule 9 (value -> compound .)
+    INTEGER         reduce using rule 9 (value -> compound .)
+    LBRACE          reduce using rule 9 (value -> compound .)
+    LBRACKET        reduce using rule 9 (value -> compound .)
+
+
+state 17
+
+    (10) value -> array .
+
+    RBRACE          reduce using rule 10 (value -> array .)
+    COMMA           reduce using rule 10 (value -> array .)
+    NAME            reduce using rule 10 (value -> array .)
+    STRING          reduce using rule 10 (value -> array .)
+    RBRACKET        reduce using rule 10 (value -> array .)
+    BOOL            reduce using rule 10 (value -> array .)
+    BYTE            reduce using rule 10 (value -> array .)
+    DOUBLE          reduce using rule 10 (value -> array .)
+    LONG            reduce using rule 10 (value -> array .)
+    INTEGER         reduce using rule 10 (value -> array .)
+    LBRACE          reduce using rule 10 (value -> array .)
+    LBRACKET        reduce using rule 10 (value -> array .)
+
+
+state 18
+
+    (11) value -> BOOL .
+
+    RBRACE          reduce using rule 11 (value -> BOOL .)
+    COMMA           reduce using rule 11 (value -> BOOL .)
+    NAME            reduce using rule 11 (value -> BOOL .)
+    STRING          reduce using rule 11 (value -> BOOL .)
+    RBRACKET        reduce using rule 11 (value -> BOOL .)
+    BOOL            reduce using rule 11 (value -> BOOL .)
+    BYTE            reduce using rule 11 (value -> BOOL .)
+    DOUBLE          reduce using rule 11 (value -> BOOL .)
+    LONG            reduce using rule 11 (value -> BOOL .)
+    INTEGER         reduce using rule 11 (value -> BOOL .)
+    LBRACE          reduce using rule 11 (value -> BOOL .)
+    LBRACKET        reduce using rule 11 (value -> BOOL .)
+
+
+state 19
+
+    (12) value -> BYTE .
+
+    RBRACE          reduce using rule 12 (value -> BYTE .)
+    COMMA           reduce using rule 12 (value -> BYTE .)
+    NAME            reduce using rule 12 (value -> BYTE .)
+    STRING          reduce using rule 12 (value -> BYTE .)
+    RBRACKET        reduce using rule 12 (value -> BYTE .)
+    BOOL            reduce using rule 12 (value -> BYTE .)
+    BYTE            reduce using rule 12 (value -> BYTE .)
+    DOUBLE          reduce using rule 12 (value -> BYTE .)
+    LONG            reduce using rule 12 (value -> BYTE .)
+    INTEGER         reduce using rule 12 (value -> BYTE .)
+    LBRACE          reduce using rule 12 (value -> BYTE .)
+    LBRACKET        reduce using rule 12 (value -> BYTE .)
+
+
+state 20
+
+    (13) value -> DOUBLE .
+
+    RBRACE          reduce using rule 13 (value -> DOUBLE .)
+    COMMA           reduce using rule 13 (value -> DOUBLE .)
+    NAME            reduce using rule 13 (value -> DOUBLE .)
+    STRING          reduce using rule 13 (value -> DOUBLE .)
+    RBRACKET        reduce using rule 13 (value -> DOUBLE .)
+    BOOL            reduce using rule 13 (value -> DOUBLE .)
+    BYTE            reduce using rule 13 (value -> DOUBLE .)
+    DOUBLE          reduce using rule 13 (value -> DOUBLE .)
+    LONG            reduce using rule 13 (value -> DOUBLE .)
+    INTEGER         reduce using rule 13 (value -> DOUBLE .)
+    LBRACE          reduce using rule 13 (value -> DOUBLE .)
+    LBRACKET        reduce using rule 13 (value -> DOUBLE .)
+
+
+state 21
+
+    (14) value -> LONG .
+
+    RBRACE          reduce using rule 14 (value -> LONG .)
+    COMMA           reduce using rule 14 (value -> LONG .)
+    NAME            reduce using rule 14 (value -> LONG .)
+    STRING          reduce using rule 14 (value -> LONG .)
+    RBRACKET        reduce using rule 14 (value -> LONG .)
+    BOOL            reduce using rule 14 (value -> LONG .)
+    BYTE            reduce using rule 14 (value -> LONG .)
+    DOUBLE          reduce using rule 14 (value -> LONG .)
+    LONG            reduce using rule 14 (value -> LONG .)
+    INTEGER         reduce using rule 14 (value -> LONG .)
+    LBRACE          reduce using rule 14 (value -> LONG .)
+    LBRACKET        reduce using rule 14 (value -> LONG .)
+
+
+state 22
+
+    (15) value -> INTEGER .
+
+    RBRACE          reduce using rule 15 (value -> INTEGER .)
+    COMMA           reduce using rule 15 (value -> INTEGER .)
+    NAME            reduce using rule 15 (value -> INTEGER .)
+    STRING          reduce using rule 15 (value -> INTEGER .)
+    RBRACKET        reduce using rule 15 (value -> INTEGER .)
+    BOOL            reduce using rule 15 (value -> INTEGER .)
+    BYTE            reduce using rule 15 (value -> INTEGER .)
+    DOUBLE          reduce using rule 15 (value -> INTEGER .)
+    LONG            reduce using rule 15 (value -> INTEGER .)
+    INTEGER         reduce using rule 15 (value -> INTEGER .)
+    LBRACE          reduce using rule 15 (value -> INTEGER .)
+    LBRACKET        reduce using rule 15 (value -> INTEGER .)
+
+
+state 23
+
+    (16) value -> STRING .
+
+    RBRACE          reduce using rule 16 (value -> STRING .)
+    COMMA           reduce using rule 16 (value -> STRING .)
+    NAME            reduce using rule 16 (value -> STRING .)
+    STRING          reduce using rule 16 (value -> STRING .)
+    RBRACKET        reduce using rule 16 (value -> STRING .)
+    BOOL            reduce using rule 16 (value -> STRING .)
+    BYTE            reduce using rule 16 (value -> STRING .)
+    DOUBLE          reduce using rule 16 (value -> STRING .)
+    LONG            reduce using rule 16 (value -> STRING .)
+    INTEGER         reduce using rule 16 (value -> STRING .)
+    LBRACE          reduce using rule 16 (value -> STRING .)
+    LBRACKET        reduce using rule 16 (value -> STRING .)
+
+
+state 24
+
+    (17) array -> LBRACKET . values RBRACKET
+    (18) array -> LBRACKET . RBRACKET
+    (19) values -> . values value
+    (20) values -> . values COMMA value
+    (21) values -> . value
+    (9) value -> . compound
+    (10) value -> . array
+    (11) value -> . BOOL
+    (12) value -> . BYTE
+    (13) value -> . DOUBLE
+    (14) value -> . LONG
+    (15) value -> . INTEGER
+    (16) value -> . STRING
+    (2) compound -> . LBRACE key_value_pairs RBRACE
+    (3) compound -> . LBRACE RBRACE
+    (17) array -> . LBRACKET values RBRACKET
+    (18) array -> . LBRACKET RBRACKET
+
+    RBRACKET        shift and go to state 27
+    BOOL            shift and go to state 18
+    BYTE            shift and go to state 19
+    DOUBLE          shift and go to state 20
+    LONG            shift and go to state 21
+    INTEGER         shift and go to state 22
+    STRING          shift and go to state 23
+    LBRACE          shift and go to state 3
+    LBRACKET        shift and go to state 24
+
+    values                         shift and go to state 26
+    value                          shift and go to state 28
+    compound                       shift and go to state 16
+    array                          shift and go to state 17
+
+state 25
+
+    (8) key_value_pair -> STRING COLON value .
+
+    RBRACE          reduce using rule 8 (key_value_pair -> STRING COLON value .)
+    COMMA           reduce using rule 8 (key_value_pair -> STRING COLON value .)
+    NAME            reduce using rule 8 (key_value_pair -> STRING COLON value .)
+    STRING          reduce using rule 8 (key_value_pair -> STRING COLON value .)
+
+
+state 26
+
+    (17) array -> LBRACKET values . RBRACKET
+    (19) values -> values . value
+    (20) values -> values . COMMA value
+    (9) value -> . compound
+    (10) value -> . array
+    (11) value -> . BOOL
+    (12) value -> . BYTE
+    (13) value -> . DOUBLE
+    (14) value -> . LONG
+    (15) value -> . INTEGER
+    (16) value -> . STRING
+    (2) compound -> . LBRACE key_value_pairs RBRACE
+    (3) compound -> . LBRACE RBRACE
+    (17) array -> . LBRACKET values RBRACKET
+    (18) array -> . LBRACKET RBRACKET
+
+    RBRACKET        shift and go to state 29
+    COMMA           shift and go to state 31
+    BOOL            shift and go to state 18
+    BYTE            shift and go to state 19
+    DOUBLE          shift and go to state 20
+    LONG            shift and go to state 21
+    INTEGER         shift and go to state 22
+    STRING          shift and go to state 23
+    LBRACE          shift and go to state 3
+    LBRACKET        shift and go to state 24
+
+    value                          shift and go to state 30
+    compound                       shift and go to state 16
+    array                          shift and go to state 17
+
+state 27
+
+    (18) array -> LBRACKET RBRACKET .
+
+    RBRACE          reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    COMMA           reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    NAME            reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    STRING          reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    RBRACKET        reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    BOOL            reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    BYTE            reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    DOUBLE          reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    LONG            reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    INTEGER         reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    LBRACE          reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    LBRACKET        reduce using rule 18 (array -> LBRACKET RBRACKET .)
+
+
+state 28
+
+    (21) values -> value .
+
+    RBRACKET        reduce using rule 21 (values -> value .)
+    COMMA           reduce using rule 21 (values -> value .)
+    BOOL            reduce using rule 21 (values -> value .)
+    BYTE            reduce using rule 21 (values -> value .)
+    DOUBLE          reduce using rule 21 (values -> value .)
+    LONG            reduce using rule 21 (values -> value .)
+    INTEGER         reduce using rule 21 (values -> value .)
+    STRING          reduce using rule 21 (values -> value .)
+    LBRACE          reduce using rule 21 (values -> value .)
+    LBRACKET        reduce using rule 21 (values -> value .)
+
+
+state 29
+
+    (17) array -> LBRACKET values RBRACKET .
+
+    RBRACE          reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    COMMA           reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    NAME            reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    STRING          reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    RBRACKET        reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    BOOL            reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    BYTE            reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    DOUBLE          reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    LONG            reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    INTEGER         reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    LBRACE          reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    LBRACKET        reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+
+
+state 30
+
+    (19) values -> values value .
+
+    RBRACKET        reduce using rule 19 (values -> values value .)
+    COMMA           reduce using rule 19 (values -> values value .)
+    BOOL            reduce using rule 19 (values -> values value .)
+    BYTE            reduce using rule 19 (values -> values value .)
+    DOUBLE          reduce using rule 19 (values -> values value .)
+    LONG            reduce using rule 19 (values -> values value .)
+    INTEGER         reduce using rule 19 (values -> values value .)
+    STRING          reduce using rule 19 (values -> values value .)
+    LBRACE          reduce using rule 19 (values -> values value .)
+    LBRACKET        reduce using rule 19 (values -> values value .)
+
+
+state 31
+
+    (20) values -> values COMMA . value
+    (9) value -> . compound
+    (10) value -> . array
+    (11) value -> . BOOL
+    (12) value -> . BYTE
+    (13) value -> . DOUBLE
+    (14) value -> . LONG
+    (15) value -> . INTEGER
+    (16) value -> . STRING
+    (2) compound -> . LBRACE key_value_pairs RBRACE
+    (3) compound -> . LBRACE RBRACE
+    (17) array -> . LBRACKET values RBRACKET
+    (18) array -> . LBRACKET RBRACKET
+
+    BOOL            shift and go to state 18
+    BYTE            shift and go to state 19
+    DOUBLE          shift and go to state 20
+    LONG            shift and go to state 21
+    INTEGER         shift and go to state 22
+    STRING          shift and go to state 23
+    LBRACE          shift and go to state 3
+    LBRACKET        shift and go to state 24
+
+    value                          shift and go to state 32
+    compound                       shift and go to state 16
+    array                          shift and go to state 17
+
+state 32
+
+    (20) values -> values COMMA value .
+
+    RBRACKET        reduce using rule 20 (values -> values COMMA value .)
+    COMMA           reduce using rule 20 (values -> values COMMA value .)
+    BOOL            reduce using rule 20 (values -> values COMMA value .)
+    BYTE            reduce using rule 20 (values -> values COMMA value .)
+    DOUBLE          reduce using rule 20 (values -> values COMMA value .)
+    LONG            reduce using rule 20 (values -> values COMMA value .)
+    INTEGER         reduce using rule 20 (values -> values COMMA value .)
+    STRING          reduce using rule 20 (values -> values COMMA value .)
+    LBRACE          reduce using rule 20 (values -> values COMMA value .)
+    LBRACKET        reduce using rule 20 (values -> values COMMA value .)
+
