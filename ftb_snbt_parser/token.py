@@ -45,7 +45,7 @@ def t_RBRACKET(t):
 
 def t_BOOL(t):
     r'true|false'
-    t.value = t.value == "true"
+    t.value = Bool(t.value == "true")
     return t
 
 def t_BYTE(t):
@@ -70,11 +70,11 @@ def t_INTEGER(t):
 
 def t_STRING(t):
     r'\"[^\"\\]*(?:\\.[^\"\\]*)*\"'
-    t.value = String(t.value[1:-1])
+    t.value = String(t.value[1:-1].replace(r'\"', '"').replace(r'\\', '\\'))
     return t
 
-def t_NAME(t):
-    r'[a-zA-Z_][a-zA-Z0-9_]*'
+def t_NAME(t):    
+    r'[a-zA-Z0-9._+-]+'
     return t
 
 def t_COLON(t):

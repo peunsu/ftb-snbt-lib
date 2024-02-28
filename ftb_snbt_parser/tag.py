@@ -1,10 +1,10 @@
-__all__ = ["Byte", "Integer", "Long", "Double", "String", "List", "Compound"]
+__all__ = ["Base", "Numeric", "NumericInteger", "Byte", "Integer", "Long", "Double", "Bool", "String", "List", "Compound"]
 
 class InvalidTypeError(ValueError):
-    def __init__(self, item, subtype):
+    def __init__(self, item, cls):
         self.item = item
-        self.subtype = subtype
-        super().__init__(f"{self.item!r} is not of type {self.subtype.__name__}")
+        self.cls = cls
+        super().__init__(f"{self.item!r} is not a valid type for the items of {cls.__name__}.\nThis error is likely caused by a type mismatch in a list.")
 
 class CastError(ValueError):
     def __init__(self, item, subtype):
@@ -22,6 +22,7 @@ class Base:
 
 class Numeric(Base):
     __slots__ = ()
+    suffix = ""
 
 class NumericInteger(Numeric, int):
     __slots__ = ()
@@ -40,6 +41,7 @@ class NumericInteger(Numeric, int):
 class Byte(NumericInteger):
     __slots__ = ()
     size = 1
+    suffix = "b"
 
 class Integer(NumericInteger):
     __slots__ = ()
@@ -48,16 +50,24 @@ class Integer(NumericInteger):
 class Long(NumericInteger):
     __slots__ = ()
     size = 8
+    suffix = "L"
 
 class Double(Numeric, float):
     __slots__ = ()
+    suffix = "d"
+
+class Bool(Base, int):
+    __slots__ = ()
+    
+    def __new__(cls, *args, **kwargs):
+        self = super().__new__(cls, *args, **kwargs)
+        return self
 
 class String(Base, str):
     __slots__ = ()
     
     def __new__(cls, *args, **kwargs):
         self = super().__new__(cls, *args, **kwargs)
-        self = self.replace(r'\"', '"').replace(r'\\', '\\')
         return self
 
 class List(Base, list):
@@ -67,36 +77,72 @@ class List(Base, list):
     def __new__(cls, iterable=()):
         if cls.subtype is None:
             iterable = tuple(iterable)
-            cls.subtype = cls.infer_type(iterable)
-        if cls.subtype is not None:
-            cls = type(f"{cls.__name__}[{cls.subtype.__name__}]", (cls,), {"__slots__": (), "subtype": cls.subtype})
+            subtype = cls.infer_type(iterable)
+            cls = cls[subtype]
         return super().__new__(cls, iterable)
+    
+    def __init__(self, iterable=()):
+        super().__init__(map(self.cast_item, iterable))
+    
+    def __class_getitem__(cls, subtype):
+        if subtype is None:
+            return List
+        return type(f"{cls.__name__}[{subtype.__name__}]", (List,), {"__slots__": (), "subtype": subtype})
 
     @staticmethod
     def infer_type(iterable):
         subtype = None
-        for element in iterable:
-            if not issubclass(type(element), Base):
+        
+        for item in iterable:
+            itemtype = type(item)
+            if not issubclass(itemtype, Base):
                 continue
-            if not isinstance(element, Base):
-                raise InvalidTypeError(element, Base)
+
             if subtype is None:
-                subtype = type(element)
-                continue
-            if not isinstance(element, subtype):
-                raise InvalidTypeError(element, subtype)
+                subtype = itemtype
+                if not issubclass(subtype, List):
+                    return subtype
+            elif subtype is not itemtype:
+                sub_t, item_t = subtype, itemtype
+                while issubclass(sub_t, List) and issubclass(item_t, List):
+                    sub_t, item_t = sub_t.subtype, item_t.subtype
+
+                if sub_t is None:
+                    subtype = itemtype
+                elif item_t is not None:
+                    return None
+            
         return subtype
+    
+    def __setitem__(self, index, value):
+        if isinstance(index, int):
+            super().__setitem__(index, self.cast_item(value))
+        elif isinstance(index, slice):
+            super().__setitem__(index, map(self.cast_item, value))
+        else:
+            raise TypeError(f"List indices must be integers or slices, not {index.__class__.__name__}")
+        
+    def append(self, value):
+        super().append(self.cast_item(value))
+    
+    def extend(self, iterable):
+        super().extend(map(self.cast_item, iterable))
+    
+    def insert(self, index, value):
+        super().insert(index, self.cast_item(value))
     
     @classmethod
     def cast_item(cls, item):
         if cls.subtype is None:
-            raise ValueError("You cannot add items to an empty List without a specified subtype.")
+            raise InvalidTypeError(item, cls)
+        
         if not isinstance(item, cls.subtype):
             try:
                 return cls.subtype(item)
             except Exception as e:
                 raise CastError(item, cls.subtype) from e
             
+        return item
     
-class Compound(dict):
-    pass
+class Compound(Base, dict):
+    __slots__ = ()
