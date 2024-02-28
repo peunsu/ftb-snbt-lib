@@ -12,15 +12,15 @@ Rule 6     key_value_pairs -> key_value_pair
 Rule 7     key_value_pair -> NAME COLON value
 Rule 8     key_value_pair -> STRING COLON value
 Rule 9     value -> compound
-Rule 10    value -> array
+Rule 10    value -> list
 Rule 11    value -> BOOL
 Rule 12    value -> BYTE
 Rule 13    value -> DOUBLE
 Rule 14    value -> LONG
 Rule 15    value -> INTEGER
 Rule 16    value -> STRING
-Rule 17    array -> LBRACKET values RBRACKET
-Rule 18    array -> LBRACKET RBRACKET
+Rule 17    list -> LBRACKET values RBRACKET
+Rule 18    list -> LBRACKET RBRACKET
 Rule 19    values -> values value
 Rule 20    values -> values COMMA value
 Rule 21    values -> value
@@ -44,10 +44,10 @@ error                :
 
 Nonterminals, with rules where they appear
 
-array                : 10
 compound             : 1 9
 key_value_pair       : 4 5 6
 key_value_pairs      : 2 4 5
+list                 : 10
 snbt                 : 0
 value                : 7 8 19 20 21
 values               : 17 19 20
@@ -198,7 +198,7 @@ state 12
 
     (7) key_value_pair -> NAME COLON . value
     (9) value -> . compound
-    (10) value -> . array
+    (10) value -> . list
     (11) value -> . BOOL
     (12) value -> . BYTE
     (13) value -> . DOUBLE
@@ -207,8 +207,8 @@ state 12
     (16) value -> . STRING
     (2) compound -> . LBRACE key_value_pairs RBRACE
     (3) compound -> . LBRACE RBRACE
-    (17) array -> . LBRACKET values RBRACKET
-    (18) array -> . LBRACKET RBRACKET
+    (17) list -> . LBRACKET values RBRACKET
+    (18) list -> . LBRACKET RBRACKET
 
     BOOL            shift and go to state 18
     BYTE            shift and go to state 19
@@ -221,13 +221,13 @@ state 12
 
     value                          shift and go to state 15
     compound                       shift and go to state 16
-    array                          shift and go to state 17
+    list                           shift and go to state 17
 
 state 13
 
     (8) key_value_pair -> STRING COLON . value
     (9) value -> . compound
-    (10) value -> . array
+    (10) value -> . list
     (11) value -> . BOOL
     (12) value -> . BYTE
     (13) value -> . DOUBLE
@@ -236,8 +236,8 @@ state 13
     (16) value -> . STRING
     (2) compound -> . LBRACE key_value_pairs RBRACE
     (3) compound -> . LBRACE RBRACE
-    (17) array -> . LBRACKET values RBRACKET
-    (18) array -> . LBRACKET RBRACKET
+    (17) list -> . LBRACKET values RBRACKET
+    (18) list -> . LBRACKET RBRACKET
 
     BOOL            shift and go to state 18
     BYTE            shift and go to state 19
@@ -250,7 +250,7 @@ state 13
 
     value                          shift and go to state 25
     compound                       shift and go to state 16
-    array                          shift and go to state 17
+    list                           shift and go to state 17
 
 state 14
 
@@ -292,20 +292,20 @@ state 16
 
 state 17
 
-    (10) value -> array .
+    (10) value -> list .
 
-    RBRACE          reduce using rule 10 (value -> array .)
-    COMMA           reduce using rule 10 (value -> array .)
-    NAME            reduce using rule 10 (value -> array .)
-    STRING          reduce using rule 10 (value -> array .)
-    RBRACKET        reduce using rule 10 (value -> array .)
-    BOOL            reduce using rule 10 (value -> array .)
-    BYTE            reduce using rule 10 (value -> array .)
-    DOUBLE          reduce using rule 10 (value -> array .)
-    LONG            reduce using rule 10 (value -> array .)
-    INTEGER         reduce using rule 10 (value -> array .)
-    LBRACE          reduce using rule 10 (value -> array .)
-    LBRACKET        reduce using rule 10 (value -> array .)
+    RBRACE          reduce using rule 10 (value -> list .)
+    COMMA           reduce using rule 10 (value -> list .)
+    NAME            reduce using rule 10 (value -> list .)
+    STRING          reduce using rule 10 (value -> list .)
+    RBRACKET        reduce using rule 10 (value -> list .)
+    BOOL            reduce using rule 10 (value -> list .)
+    BYTE            reduce using rule 10 (value -> list .)
+    DOUBLE          reduce using rule 10 (value -> list .)
+    LONG            reduce using rule 10 (value -> list .)
+    INTEGER         reduce using rule 10 (value -> list .)
+    LBRACE          reduce using rule 10 (value -> list .)
+    LBRACKET        reduce using rule 10 (value -> list .)
 
 
 state 18
@@ -418,13 +418,13 @@ state 23
 
 state 24
 
-    (17) array -> LBRACKET . values RBRACKET
-    (18) array -> LBRACKET . RBRACKET
+    (17) list -> LBRACKET . values RBRACKET
+    (18) list -> LBRACKET . RBRACKET
     (19) values -> . values value
     (20) values -> . values COMMA value
     (21) values -> . value
     (9) value -> . compound
-    (10) value -> . array
+    (10) value -> . list
     (11) value -> . BOOL
     (12) value -> . BYTE
     (13) value -> . DOUBLE
@@ -433,8 +433,8 @@ state 24
     (16) value -> . STRING
     (2) compound -> . LBRACE key_value_pairs RBRACE
     (3) compound -> . LBRACE RBRACE
-    (17) array -> . LBRACKET values RBRACKET
-    (18) array -> . LBRACKET RBRACKET
+    (17) list -> . LBRACKET values RBRACKET
+    (18) list -> . LBRACKET RBRACKET
 
     RBRACKET        shift and go to state 27
     BOOL            shift and go to state 18
@@ -449,7 +449,7 @@ state 24
     values                         shift and go to state 26
     value                          shift and go to state 28
     compound                       shift and go to state 16
-    array                          shift and go to state 17
+    list                           shift and go to state 17
 
 state 25
 
@@ -463,11 +463,11 @@ state 25
 
 state 26
 
-    (17) array -> LBRACKET values . RBRACKET
+    (17) list -> LBRACKET values . RBRACKET
     (19) values -> values . value
     (20) values -> values . COMMA value
     (9) value -> . compound
-    (10) value -> . array
+    (10) value -> . list
     (11) value -> . BOOL
     (12) value -> . BYTE
     (13) value -> . DOUBLE
@@ -476,8 +476,8 @@ state 26
     (16) value -> . STRING
     (2) compound -> . LBRACE key_value_pairs RBRACE
     (3) compound -> . LBRACE RBRACE
-    (17) array -> . LBRACKET values RBRACKET
-    (18) array -> . LBRACKET RBRACKET
+    (17) list -> . LBRACKET values RBRACKET
+    (18) list -> . LBRACKET RBRACKET
 
     RBRACKET        shift and go to state 29
     COMMA           shift and go to state 31
@@ -492,24 +492,24 @@ state 26
 
     value                          shift and go to state 30
     compound                       shift and go to state 16
-    array                          shift and go to state 17
+    list                           shift and go to state 17
 
 state 27
 
-    (18) array -> LBRACKET RBRACKET .
+    (18) list -> LBRACKET RBRACKET .
 
-    RBRACE          reduce using rule 18 (array -> LBRACKET RBRACKET .)
-    COMMA           reduce using rule 18 (array -> LBRACKET RBRACKET .)
-    NAME            reduce using rule 18 (array -> LBRACKET RBRACKET .)
-    STRING          reduce using rule 18 (array -> LBRACKET RBRACKET .)
-    RBRACKET        reduce using rule 18 (array -> LBRACKET RBRACKET .)
-    BOOL            reduce using rule 18 (array -> LBRACKET RBRACKET .)
-    BYTE            reduce using rule 18 (array -> LBRACKET RBRACKET .)
-    DOUBLE          reduce using rule 18 (array -> LBRACKET RBRACKET .)
-    LONG            reduce using rule 18 (array -> LBRACKET RBRACKET .)
-    INTEGER         reduce using rule 18 (array -> LBRACKET RBRACKET .)
-    LBRACE          reduce using rule 18 (array -> LBRACKET RBRACKET .)
-    LBRACKET        reduce using rule 18 (array -> LBRACKET RBRACKET .)
+    RBRACE          reduce using rule 18 (list -> LBRACKET RBRACKET .)
+    COMMA           reduce using rule 18 (list -> LBRACKET RBRACKET .)
+    NAME            reduce using rule 18 (list -> LBRACKET RBRACKET .)
+    STRING          reduce using rule 18 (list -> LBRACKET RBRACKET .)
+    RBRACKET        reduce using rule 18 (list -> LBRACKET RBRACKET .)
+    BOOL            reduce using rule 18 (list -> LBRACKET RBRACKET .)
+    BYTE            reduce using rule 18 (list -> LBRACKET RBRACKET .)
+    DOUBLE          reduce using rule 18 (list -> LBRACKET RBRACKET .)
+    LONG            reduce using rule 18 (list -> LBRACKET RBRACKET .)
+    INTEGER         reduce using rule 18 (list -> LBRACKET RBRACKET .)
+    LBRACE          reduce using rule 18 (list -> LBRACKET RBRACKET .)
+    LBRACKET        reduce using rule 18 (list -> LBRACKET RBRACKET .)
 
 
 state 28
@@ -530,20 +530,20 @@ state 28
 
 state 29
 
-    (17) array -> LBRACKET values RBRACKET .
+    (17) list -> LBRACKET values RBRACKET .
 
-    RBRACE          reduce using rule 17 (array -> LBRACKET values RBRACKET .)
-    COMMA           reduce using rule 17 (array -> LBRACKET values RBRACKET .)
-    NAME            reduce using rule 17 (array -> LBRACKET values RBRACKET .)
-    STRING          reduce using rule 17 (array -> LBRACKET values RBRACKET .)
-    RBRACKET        reduce using rule 17 (array -> LBRACKET values RBRACKET .)
-    BOOL            reduce using rule 17 (array -> LBRACKET values RBRACKET .)
-    BYTE            reduce using rule 17 (array -> LBRACKET values RBRACKET .)
-    DOUBLE          reduce using rule 17 (array -> LBRACKET values RBRACKET .)
-    LONG            reduce using rule 17 (array -> LBRACKET values RBRACKET .)
-    INTEGER         reduce using rule 17 (array -> LBRACKET values RBRACKET .)
-    LBRACE          reduce using rule 17 (array -> LBRACKET values RBRACKET .)
-    LBRACKET        reduce using rule 17 (array -> LBRACKET values RBRACKET .)
+    RBRACE          reduce using rule 17 (list -> LBRACKET values RBRACKET .)
+    COMMA           reduce using rule 17 (list -> LBRACKET values RBRACKET .)
+    NAME            reduce using rule 17 (list -> LBRACKET values RBRACKET .)
+    STRING          reduce using rule 17 (list -> LBRACKET values RBRACKET .)
+    RBRACKET        reduce using rule 17 (list -> LBRACKET values RBRACKET .)
+    BOOL            reduce using rule 17 (list -> LBRACKET values RBRACKET .)
+    BYTE            reduce using rule 17 (list -> LBRACKET values RBRACKET .)
+    DOUBLE          reduce using rule 17 (list -> LBRACKET values RBRACKET .)
+    LONG            reduce using rule 17 (list -> LBRACKET values RBRACKET .)
+    INTEGER         reduce using rule 17 (list -> LBRACKET values RBRACKET .)
+    LBRACE          reduce using rule 17 (list -> LBRACKET values RBRACKET .)
+    LBRACKET        reduce using rule 17 (list -> LBRACKET values RBRACKET .)
 
 
 state 30
@@ -566,7 +566,7 @@ state 31
 
     (20) values -> values COMMA . value
     (9) value -> . compound
-    (10) value -> . array
+    (10) value -> . list
     (11) value -> . BOOL
     (12) value -> . BYTE
     (13) value -> . DOUBLE
@@ -575,8 +575,8 @@ state 31
     (16) value -> . STRING
     (2) compound -> . LBRACE key_value_pairs RBRACE
     (3) compound -> . LBRACE RBRACE
-    (17) array -> . LBRACKET values RBRACKET
-    (18) array -> . LBRACKET RBRACKET
+    (17) list -> . LBRACKET values RBRACKET
+    (18) list -> . LBRACKET RBRACKET
 
     BOOL            shift and go to state 18
     BYTE            shift and go to state 19
@@ -589,7 +589,7 @@ state 31
 
     value                          shift and go to state 32
     compound                       shift and go to state 16
-    array                          shift and go to state 17
+    list                           shift and go to state 17
 
 state 32
 

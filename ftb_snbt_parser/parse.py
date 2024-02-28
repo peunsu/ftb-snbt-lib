@@ -21,7 +21,7 @@ def p_key_value_pairs(p):
     if len(p) == 2:
         p[0] = [p[1]]
     elif len(p) == 4:
-        p[0] = p[1]
+        p[0] = p[1] + [p[3]]
     else:
         p[0] = p[1] + [p[2]]
 
@@ -32,7 +32,7 @@ def p_key_value_pair(p):
 
 def p_value(p):
     """value : compound
-                | array
+                | list
                 | BOOL
                 | BYTE
                 | DOUBLE
@@ -41,13 +41,13 @@ def p_value(p):
                 | STRING"""
     p[0] = p[1]
 
-def p_array(p):
-    """array : LBRACKET values RBRACKET
+def p_list(p):
+    """list : LBRACKET values RBRACKET
                 | LBRACKET RBRACKET"""
     if len(p) == 3:
-        p[0] = Array()
+        p[0] = List()
     else:
-        p[0] = Array(p[2])
+        p[0] = List(p[2])
 
 def p_values(p):
     """values : values value
