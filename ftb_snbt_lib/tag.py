@@ -22,6 +22,7 @@ class Base:
 
 class Numeric(Base):
     __slots__ = ()
+    write_func = "numeric"
     suffix = ""
 
 class NumericInteger(Numeric, int):
@@ -58,6 +59,7 @@ class Double(Numeric, float):
 
 class Bool(Base, int):
     __slots__ = ()
+    write_func = "bool"
     
     def __new__(cls, *args, **kwargs):
         self = super().__new__(cls, *args, **kwargs)
@@ -65,6 +67,7 @@ class Bool(Base, int):
 
 class String(Base, str):
     __slots__ = ()
+    write_func = "string"
     
     def __new__(cls, *args, **kwargs):
         self = super().__new__(cls, *args, **kwargs)
@@ -72,6 +75,7 @@ class String(Base, str):
 
 class List(Base, list):
     __slots__ = ()
+    write_func = "list"
     subtype = None
     
     def __new__(cls, iterable=()):
@@ -146,3 +150,4 @@ class List(Base, list):
     
 class Compound(Base, dict):
     __slots__ = ()
+    write_func = "compound"
