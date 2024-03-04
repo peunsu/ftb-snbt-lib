@@ -78,16 +78,16 @@ For instance, ``List[Byte(1), Byte(2), Byte(3)]`` must contain **only** the ``By
 ```
 
 ## Data Types
-| Type | Description | Range | Format | Example |
-| - | - | - | - | - |
-| Byte | A signed 8-bit integer. | ``-128`` ~ ``127`` | ``<number>b`` | ``12b``, ``-35b`` |
-| Integer | A signed 32-bit integer. | ``-2,147,483,647`` ~ ``2,147,483,647`` | ``<number>`` | ``12345`` |
-| Long | A signed 64-bit integer. | ``9,223,372,036,854,775,808`` ~ ``9,223,372,036,854,775,807`` | ``<number>L`` | ``12345L`` |
-| Double | A 64-bit, double-precision floating-point number. | ``-1.7E+308`` ~ ``+1.7E+308.`` | ``<number>d`` | ``12.345d`` |
-| Bool | A boolean data type. | ``0`` (false), ``1`` (true) | ``false``, ``true`` | ``true`` |
-| String | A sequence of characters. | - | A string enclosed in **double quotes ``""``**. Nested double quotes can be included within a string using a **escaping character ``\"``**. | `"Hello, World!"`<br>`"Say \"Hello, World!\""` |
-| List | An ordered list of tags. The tags must be of **the same type**, determined by the first tag in the list. | - | Unnamed tags enclosed in square brackets and delimited by **newline** characters (``\n``). | <pre>[<br>    3.2d<br>    1.4d<br>    ...<br>]</pre> |
-| Compound | An ordered list of attribute-value pairs.<br>Each tag can be of **any type**. | - | Named tags enclosed in curly braces and delimited by commas or **newline** characters (``\n``).<br>The key (tag name) can be unquoted if it contains only ``0-9``, ``A-Z``, ``a-z``, ``_``, ``-``, ``.``, and ``+``. Otherwise the key should be quoted, following the rules of ``String`` type. | <pre>[<br>    tag1: "string"<br>    tag2: 12b<br>    ...<br>]</pre> |
+| Type | Description | Format | Example |
+| - | - | - | - |
+| Byte | A signed 8-bit integer.<br>Range: ``-128`` ~ ``127`` | ``<number>b`` | ``12b``, ``-35b`` |
+| Integer | A signed 32-bit integer.<br>Range: ``-2,147,483,647`` ~ ``2,147,483,647`` | ``<number>`` | ``12345`` |
+| Long | A signed 64-bit integer.<br>Range: ``9,223,372,036,854,775,808`` ~ ``9,223,372,036,854,775,807`` | ``<number>L`` | ``12345L`` |
+| Double | A 64-bit, double-precision floating-point number.<br>Range: ``-1.7E+308`` ~ ``+1.7E+308.`` | ``<number>d`` | ``12.345d`` |
+| Bool | A boolean data type.<br>``0`` for ``false``, ``1`` for ``true``. | ``false``, ``true`` | ``true`` |
+| String | A sequence of characters. | A string enclosed in **double quotes ``""``**.<br>Nested double quotes can be included within a string using a **escaping character ``\"``**. | `"Hello, World!"`,<br>`"Say \"Hello, World!\""` |
+| List | An ordered list of tags.<br>The tags must be of **the same type**, determined by the first tag in the list. | Unnamed tags enclosed in square brackets and delimited by **newline** characters (``\n``). | <pre>[<br>    3.2d<br>    1.4d<br>    ...<br>]</pre> |
+| Compound | An ordered list of attribute-value pairs.<br>Each tag can be of **any type**. | Named tags enclosed in curly braces and delimited by commas or **newline** characters (``\n``).<br>The key (tag name) can be unquoted if it contains only ``0-9``, ``A-Z``, ``a-z``, ``_``, ``-``, ``.``, and ``+``. Otherwise the key should be quoted, using the format of ``String`` type. | <pre>[<br>    tag1: "string"<br>    tag2: 12b<br>    \"quoted:tag\": 3.5d<br>    ...<br>]</pre> |
 
 ## References
 * [PLY - Python Lex-Yacc](https://github.com/dabeaz/ply) by [David Beazley](https://www.dabeaz.com)
