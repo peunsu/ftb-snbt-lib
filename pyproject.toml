@@ -1,6 +1,39 @@
 [build-system]
 requires = [
-    "setuptools>=42",
+    "setuptools>=68.0",
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "ftb_snbt_lib"
+authors = [
+    { name="peunsu", email="peunsu55@gmail.com" }
+]
+description = "A python library to parse, edit, and save FTB snbt tag, which is a variant of the \"vanilla\" snbt tag."
+readme = { file="README.md", content-type="text/markdown" }
+requires-python = ">=3.9"
+keywords = [
+    "minecraft",
+    "ftb",
+    "snbt",
+    "parser",
+    "library",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "wheel",
+]
+dynamic = [ "version" ]
+
+[project.urls]
+homepage = "https://github.com/peunsu/ftb-snbt-lib"
+repository = "https://github.com/peunsu/ftb-snbt-lib"
+documentation = "https://github.com/peunsu/ftb-snbt-lib"
+
+[tool.setuptools.dynamic]
+version = {attr = "ftb_snbt_lib.__version__"}
