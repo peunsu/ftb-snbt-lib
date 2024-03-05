@@ -18,6 +18,12 @@ This is the example of the FTB snbt tag:
 
 **This library is only for the FTB snbt tag**. If you are finding the snbt library for the "vanilla" snbt tag, use [nbtlib](https://github.com/vberlier/nbtlib) by [vberlier](https://github.com/vberlier).
 
+## Installation
+The package can be installed with ``pip``.
+```bash
+$ pip install ftb_snbt_lib
+```
+
 ## Getting Started
 * Import the library.
 ```python
@@ -29,7 +35,7 @@ This is the example of the FTB snbt tag:
 >>> some_snbt = ftb_snbt_lib.load(open("tests/some_file.snbt", "r", encoding="utf-8"))
 ```
 * The type of returned value is ``Compound``, a dictionary-like object.<br>
-The ``Compound`` is containing values with **custom data types** provided by this library.
+The ``Compound`` is containing values with **[tag data types](#data-types)** provided by this library.
 ```python
 >>> type(some_snbt)
 <class 'ftb_snbt.tag.Compound'>
@@ -63,7 +69,7 @@ Compound({'some_tag': String('some_value'), 'another_tag': Byte(1)})
 ```
 
 * Edit the snbt tag. As its type is ``Compound``, it can be edited like a dictionary.<br>
-The inserted or replace values should be any of **custom data types** provided by this library.
+The inserted or replace values should be any of **[tag data types](#data-types)** provided by this library.
 ```python
 >>> another_snbt["some_tag"] = ftb_snbt_lib.String("another_value")
 ```
