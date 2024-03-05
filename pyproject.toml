@@ -35,8 +35,5 @@ homepage = "https://github.com/peunsu/ftb-snbt-lib"
 repository = "https://github.com/peunsu/ftb-snbt-lib"
 documentation = "https://github.com/peunsu/ftb-snbt-lib"
 
-[tool.setuptools]
-py-modules = ["ftb_snbt_lib"]
-
 [tool.setuptools.dynamic]
 version = {attr = "ftb_snbt_lib.__version__"}
