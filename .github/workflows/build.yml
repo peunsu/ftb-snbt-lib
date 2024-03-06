@@ -29,5 +29,5 @@ jobs:
       - name: Upload wheel
         uses: actions/upload-artifact@v4
         with:
-          name: ci-wheels-${{ strategy.job-index }}
+          name: ci-wheels-python${{ matrix.python-version }}-${{ strategy.job-index }}
           path: ./dist/*.whl

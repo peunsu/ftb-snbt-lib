@@ -6,7 +6,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ftb_snbt_lib"
+name = "ftb-snbt-lib"
 authors = [
     { name="peunsu", email="peunsu55@gmail.com" }
 ]
