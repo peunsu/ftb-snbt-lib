@@ -21,7 +21,7 @@ This is the example of the FTB snbt tag:
 ## Installation
 The package can be installed with ``pip``.
 ```bash
-$ pip install ftb_snbt_lib
+$ pip install ftb-snbt-lib
 ```
 
 ## Getting Started
