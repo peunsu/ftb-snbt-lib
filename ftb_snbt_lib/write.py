@@ -80,7 +80,7 @@ def dump(tag: Base, fp) -> None:
 
 class Writer:
     def __init__(self):
-        self.indentation = " " * 4
+        self.indentation = "\t"
         
         self.indent = ""
         self.prev_indent = ""
@@ -104,9 +104,12 @@ class Writer:
                 not self.prev_indent
                 or (
                     isinstance(tag, List)
-                    and len(tag) > 1
+                    and len(tag) > 0
                 )
-                or isinstance(tag, Compound)
+                or (
+                    isinstance(tag, Compound)
+                    and len(tag) > 0
+                )
             )
         )
 
