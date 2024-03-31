@@ -80,7 +80,7 @@ def dump(tag: Base, fp) -> None:
 
 class Writer:
     def __init__(self):
-        self.indentation = " " * 4
+        self.indentation = "\t"
         
         self.indent = ""
         self.prev_indent = ""
@@ -97,16 +97,12 @@ class Writer:
             self.indent = self.prev_indent
             self.prev_indent = prev
             
-    def should_expand(self, tag: Base | str) -> bool:
+    def should_expand(self, tag: List | Compound) -> bool:
         return (
             self.indentation is not None
             and (
                 not self.prev_indent
-                or (
-                    isinstance(tag, List)
-                    and len(tag) > 1
-                )
-                or isinstance(tag, Compound)
+                or isinstance(tag, (List, Compound))
             )
         )
 
@@ -135,24 +131,26 @@ class Writer:
     def write_list(self, tag: List) -> str:
         separator, fmt = "\n", "[{}]"
 
+        if len(tag) == 0:
+            return fmt.format(" ")
+        if len(tag) == 1:
+            return fmt.format(self.write(tag[0]))
+        
         with self.depth():
             if self.should_expand(tag):
                 separator, fmt = self.expand(fmt)
-                
-            if not tag:
-                return fmt.format(" ")
 
             return fmt.format(separator.join(map(self.write, tag)))
     
     def write_compound(self, tag: Compound) -> str:
         separator, fmt = "\n", "{{{}}}"
 
+        if len(tag) == 0:
+            return fmt.format(" ")
+        
         with self.depth():
             if self.should_expand(tag):
                 separator, fmt = self.expand(fmt)
-            
-            if not tag:
-                return fmt.format(" ")
 
             return fmt.format(
                 separator.join(

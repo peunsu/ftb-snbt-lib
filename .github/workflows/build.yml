@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12"]
 
     steps:
       - uses: actions/checkout@v4
@@ -29,5 +29,5 @@ jobs:
       - name: Upload wheel
         uses: actions/upload-artifact@v4
         with:
-          name: ci-wheels-python${{ matrix.python-version }}-${{ strategy.job-index }}
+          name: ci-wheels-${{ strategy.job-index }}-python${{ matrix.python-version }}
           path: ./dist/*.whl
