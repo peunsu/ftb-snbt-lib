@@ -1,4 +1,4 @@
-__all__ = ["Base", "Numeric", "NumericInteger", "Byte", "Integer", "Long", "Double", "Bool", "String", "List", "Compound"]
+__all__ = ["Base", "Numeric", "NumericInteger", "Byte", "Short", "Integer", "Long", "Double", "Bool", "String", "List", "Compound"]
 
 class InvalidTypeError(ValueError):
     def __init__(self, item, cls):
@@ -43,6 +43,11 @@ class Byte(NumericInteger):
     __slots__ = ()
     size = 1
     suffix = "b"
+
+class Short(NumericInteger):
+    __slots__ = ()
+    size = 2
+    suffix = "s"
 
 class Integer(NumericInteger):
     __slots__ = ()

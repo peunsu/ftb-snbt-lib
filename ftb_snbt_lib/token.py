@@ -8,6 +8,7 @@ tokens = (
     "RBRACKET",
     "BOOL",
     "BYTE",
+    "SHORT",
     "DOUBLE",
     "LONG",
     "INTEGER",
@@ -51,6 +52,11 @@ def t_BOOL(t):
 def t_BYTE(t):
     r'\-?[0-9]+b'
     t.value = Byte(t.value[:-1])
+    return t
+
+def t_SHORT(t):
+    r'\-?[0-9]+s'
+    t.value = Short(t.value[:-1])
     return t
 
 def t_DOUBLE(t):
