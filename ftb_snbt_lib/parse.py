@@ -37,6 +37,7 @@ def p_value(p):
                 | list
                 | BOOL
                 | BYTE
+                | SHORT
                 | DOUBLE
                 | LONG
                 | INTEGER
