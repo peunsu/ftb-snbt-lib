@@ -1,4 +1,4 @@
-__all__ = ["Base", "Numeric", "NumericInteger", "Byte", "Short", "Integer", "Long", "Double", "Bool", "String", "List", "Compound"]
+__all__ = ["Base", "Numeric", "NumericInteger", "Byte", "Short", "Integer", "Long", "Double", "Bool", "String", "List", "Array", "Compound"]
 
 class InvalidTypeError(ValueError):
     def __init__(self, item, cls):
@@ -152,6 +152,74 @@ class List(Base, list):
                 raise CastError(item, cls.subtype) from e
             
         return item
+
+class Array(Base, list):
+    __slots__ = ()
+    write_func = "array"
+    subtype = None
+    array_prefix = None
+
+    def __new__(cls, subtype, iterable=()):
+        if cls.subtype is None:
+            cls = cls[subtype]
+        return super().__new__(cls, subtype, iterable)
+    
+    def __init__(self, subtype, iterable=()):
+        super().__init__(map(self.cast_item, iterable))
+
+    def __class_getitem__(cls, subtype):
+        if subtype == "B":
+            return ByteArray
+        if subtype == "I":
+            return IntArray
+        if subtype == "L":
+            return LongArray
+        raise TypeError(f"Array type must be specified with 'B', 'I', or 'L'")
+    
+    def __setitem__(self, index, value):
+        if isinstance(index, int):
+            super().__setitem__(index, self.cast_item(value))
+        elif isinstance(index, slice):
+            super().__setitem__(index, map(self.cast_item, value))
+        else:
+            raise TypeError(f"Array indices must be integers or slices, not {index.__class__.__name__}")
+    
+    def append(self, value):
+        super().append(self.cast_item(value))
+    
+    def extend(self, iterable):
+        super().extend(map(self.cast_item, iterable))
+    
+    def insert(self, index, value):
+        super().insert(index, self.cast_item(value))
+
+    @classmethod
+    def cast_item(cls, item):
+        if cls.subtype is None:
+            raise InvalidTypeError(item, cls)
+        
+        if not isinstance(item, cls.subtype):
+            try:
+                return cls.subtype(item)
+            except Exception as e:
+                raise CastError(item, cls.subtype) from e
+            
+        return item
+
+class ByteArray(Array):
+    __slots__ = ()
+    subtype = Byte
+    array_prefix = "B"
+
+class IntArray(Array):
+    __slots__ = ()
+    subtype = Integer
+    array_prefix = "I"
+
+class LongArray(Array):
+    __slots__ = ()
+    subtype = Long
+    array_prefix = "L"
     
 class Compound(Base, dict):
     __slots__ = ()
