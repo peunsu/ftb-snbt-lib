@@ -15,6 +15,7 @@ tokens = (
     "STRING",
     "NAME",
     "COLON",
+    "SEMICOLON",
     "COMMA",
 )
 
@@ -85,6 +86,10 @@ def t_NAME(t):
 
 def t_COLON(t):
     r'\:'
+    return t
+
+def t_SEMICOLON(t):
+    r'\;'
     return t
 
 def t_COMMA(t):

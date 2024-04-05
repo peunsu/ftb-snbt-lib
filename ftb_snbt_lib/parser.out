@@ -13,46 +13,51 @@ Rule 7     key_value_pair -> NAME COLON value
 Rule 8     key_value_pair -> STRING COLON value
 Rule 9     value -> compound
 Rule 10    value -> list
-Rule 11    value -> BOOL
-Rule 12    value -> BYTE
-Rule 13    value -> SHORT
-Rule 14    value -> DOUBLE
-Rule 15    value -> LONG
-Rule 16    value -> INTEGER
-Rule 17    value -> STRING
-Rule 18    list -> LBRACKET values RBRACKET
-Rule 19    list -> LBRACKET RBRACKET
-Rule 20    values -> values value
-Rule 21    values -> values COMMA value
-Rule 22    values -> value
+Rule 11    value -> array
+Rule 12    value -> BOOL
+Rule 13    value -> BYTE
+Rule 14    value -> SHORT
+Rule 15    value -> DOUBLE
+Rule 16    value -> LONG
+Rule 17    value -> INTEGER
+Rule 18    value -> STRING
+Rule 19    list -> LBRACKET values RBRACKET
+Rule 20    list -> LBRACKET RBRACKET
+Rule 21    array -> LBRACKET NAME SEMICOLON values RBRACKET
+Rule 22    array -> LBRACKET NAME SEMICOLON RBRACKET
+Rule 23    values -> values value
+Rule 24    values -> values COMMA value
+Rule 25    values -> value
 
 Terminals, with rules where they appear
 
-BOOL                 : 11
-BYTE                 : 12
+BOOL                 : 12
+BYTE                 : 13
 COLON                : 7 8
-COMMA                : 5 21
-DOUBLE               : 14
-INTEGER              : 16
+COMMA                : 5 24
+DOUBLE               : 15
+INTEGER              : 17
 LBRACE               : 2 3
-LBRACKET             : 18 19
-LONG                 : 15
-NAME                 : 7
+LBRACKET             : 19 20 21 22
+LONG                 : 16
+NAME                 : 7 21 22
 RBRACE               : 2 3
-RBRACKET             : 18 19
-SHORT                : 13
-STRING               : 8 17
+RBRACKET             : 19 20 21 22
+SEMICOLON            : 21 22
+SHORT                : 14
+STRING               : 8 18
 error                : 
 
 Nonterminals, with rules where they appear
 
+array                : 11
 compound             : 1 9
 key_value_pair       : 4 5 6
 key_value_pairs      : 2 4 5
 list                 : 10
 snbt                 : 0
-value                : 7 8 20 21 22
-values               : 18 20 21
+value                : 7 8 23 24 25
+values               : 19 21 23 24
 
 Parsing method: LALR
 
@@ -203,62 +208,70 @@ state 12
     (7) key_value_pair -> NAME COLON . value
     (9) value -> . compound
     (10) value -> . list
-    (11) value -> . BOOL
-    (12) value -> . BYTE
-    (13) value -> . SHORT
-    (14) value -> . DOUBLE
-    (15) value -> . LONG
-    (16) value -> . INTEGER
-    (17) value -> . STRING
+    (11) value -> . array
+    (12) value -> . BOOL
+    (13) value -> . BYTE
+    (14) value -> . SHORT
+    (15) value -> . DOUBLE
+    (16) value -> . LONG
+    (17) value -> . INTEGER
+    (18) value -> . STRING
     (2) compound -> . LBRACE key_value_pairs RBRACE
     (3) compound -> . LBRACE RBRACE
-    (18) list -> . LBRACKET values RBRACKET
-    (19) list -> . LBRACKET RBRACKET
+    (19) list -> . LBRACKET values RBRACKET
+    (20) list -> . LBRACKET RBRACKET
+    (21) array -> . LBRACKET NAME SEMICOLON values RBRACKET
+    (22) array -> . LBRACKET NAME SEMICOLON RBRACKET
 
-    BOOL            shift and go to state 18
-    BYTE            shift and go to state 19
-    SHORT           shift and go to state 20
-    DOUBLE          shift and go to state 21
-    LONG            shift and go to state 22
-    INTEGER         shift and go to state 23
-    STRING          shift and go to state 24
+    BOOL            shift and go to state 19
+    BYTE            shift and go to state 20
+    SHORT           shift and go to state 21
+    DOUBLE          shift and go to state 22
+    LONG            shift and go to state 23
+    INTEGER         shift and go to state 24
+    STRING          shift and go to state 25
     LBRACE          shift and go to state 3
-    LBRACKET        shift and go to state 25
+    LBRACKET        shift and go to state 26
 
     value                          shift and go to state 15
     compound                       shift and go to state 16
     list                           shift and go to state 17
+    array                          shift and go to state 18
 
 state 13
 
     (8) key_value_pair -> STRING COLON . value
     (9) value -> . compound
     (10) value -> . list
-    (11) value -> . BOOL
-    (12) value -> . BYTE
-    (13) value -> . SHORT
-    (14) value -> . DOUBLE
-    (15) value -> . LONG
-    (16) value -> . INTEGER
-    (17) value -> . STRING
+    (11) value -> . array
+    (12) value -> . BOOL
+    (13) value -> . BYTE
+    (14) value -> . SHORT
+    (15) value -> . DOUBLE
+    (16) value -> . LONG
+    (17) value -> . INTEGER
+    (18) value -> . STRING
     (2) compound -> . LBRACE key_value_pairs RBRACE
     (3) compound -> . LBRACE RBRACE
-    (18) list -> . LBRACKET values RBRACKET
-    (19) list -> . LBRACKET RBRACKET
+    (19) list -> . LBRACKET values RBRACKET
+    (20) list -> . LBRACKET RBRACKET
+    (21) array -> . LBRACKET NAME SEMICOLON values RBRACKET
+    (22) array -> . LBRACKET NAME SEMICOLON RBRACKET
 
-    BOOL            shift and go to state 18
-    BYTE            shift and go to state 19
-    SHORT           shift and go to state 20
-    DOUBLE          shift and go to state 21
-    LONG            shift and go to state 22
-    INTEGER         shift and go to state 23
-    STRING          shift and go to state 24
+    BOOL            shift and go to state 19
+    BYTE            shift and go to state 20
+    SHORT           shift and go to state 21
+    DOUBLE          shift and go to state 22
+    LONG            shift and go to state 23
+    INTEGER         shift and go to state 24
+    STRING          shift and go to state 25
     LBRACE          shift and go to state 3
-    LBRACKET        shift and go to state 25
+    LBRACKET        shift and go to state 26
 
-    value                          shift and go to state 26
+    value                          shift and go to state 27
     compound                       shift and go to state 16
     list                           shift and go to state 17
+    array                          shift and go to state 18
 
 state 14
 
@@ -320,175 +333,201 @@ state 17
 
 state 18
 
-    (11) value -> BOOL .
+    (11) value -> array .
 
-    RBRACE          reduce using rule 11 (value -> BOOL .)
-    COMMA           reduce using rule 11 (value -> BOOL .)
-    NAME            reduce using rule 11 (value -> BOOL .)
-    STRING          reduce using rule 11 (value -> BOOL .)
-    RBRACKET        reduce using rule 11 (value -> BOOL .)
-    BOOL            reduce using rule 11 (value -> BOOL .)
-    BYTE            reduce using rule 11 (value -> BOOL .)
-    SHORT           reduce using rule 11 (value -> BOOL .)
-    DOUBLE          reduce using rule 11 (value -> BOOL .)
-    LONG            reduce using rule 11 (value -> BOOL .)
-    INTEGER         reduce using rule 11 (value -> BOOL .)
-    LBRACE          reduce using rule 11 (value -> BOOL .)
-    LBRACKET        reduce using rule 11 (value -> BOOL .)
+    RBRACE          reduce using rule 11 (value -> array .)
+    COMMA           reduce using rule 11 (value -> array .)
+    NAME            reduce using rule 11 (value -> array .)
+    STRING          reduce using rule 11 (value -> array .)
+    RBRACKET        reduce using rule 11 (value -> array .)
+    BOOL            reduce using rule 11 (value -> array .)
+    BYTE            reduce using rule 11 (value -> array .)
+    SHORT           reduce using rule 11 (value -> array .)
+    DOUBLE          reduce using rule 11 (value -> array .)
+    LONG            reduce using rule 11 (value -> array .)
+    INTEGER         reduce using rule 11 (value -> array .)
+    LBRACE          reduce using rule 11 (value -> array .)
+    LBRACKET        reduce using rule 11 (value -> array .)
 
 
 state 19
 
-    (12) value -> BYTE .
+    (12) value -> BOOL .
 
-    RBRACE          reduce using rule 12 (value -> BYTE .)
-    COMMA           reduce using rule 12 (value -> BYTE .)
-    NAME            reduce using rule 12 (value -> BYTE .)
-    STRING          reduce using rule 12 (value -> BYTE .)
-    RBRACKET        reduce using rule 12 (value -> BYTE .)
-    BOOL            reduce using rule 12 (value -> BYTE .)
-    BYTE            reduce using rule 12 (value -> BYTE .)
-    SHORT           reduce using rule 12 (value -> BYTE .)
-    DOUBLE          reduce using rule 12 (value -> BYTE .)
-    LONG            reduce using rule 12 (value -> BYTE .)
-    INTEGER         reduce using rule 12 (value -> BYTE .)
-    LBRACE          reduce using rule 12 (value -> BYTE .)
-    LBRACKET        reduce using rule 12 (value -> BYTE .)
+    RBRACE          reduce using rule 12 (value -> BOOL .)
+    COMMA           reduce using rule 12 (value -> BOOL .)
+    NAME            reduce using rule 12 (value -> BOOL .)
+    STRING          reduce using rule 12 (value -> BOOL .)
+    RBRACKET        reduce using rule 12 (value -> BOOL .)
+    BOOL            reduce using rule 12 (value -> BOOL .)
+    BYTE            reduce using rule 12 (value -> BOOL .)
+    SHORT           reduce using rule 12 (value -> BOOL .)
+    DOUBLE          reduce using rule 12 (value -> BOOL .)
+    LONG            reduce using rule 12 (value -> BOOL .)
+    INTEGER         reduce using rule 12 (value -> BOOL .)
+    LBRACE          reduce using rule 12 (value -> BOOL .)
+    LBRACKET        reduce using rule 12 (value -> BOOL .)
 
 
 state 20
 
-    (13) value -> SHORT .
+    (13) value -> BYTE .
 
-    RBRACE          reduce using rule 13 (value -> SHORT .)
-    COMMA           reduce using rule 13 (value -> SHORT .)
-    NAME            reduce using rule 13 (value -> SHORT .)
-    STRING          reduce using rule 13 (value -> SHORT .)
-    RBRACKET        reduce using rule 13 (value -> SHORT .)
-    BOOL            reduce using rule 13 (value -> SHORT .)
-    BYTE            reduce using rule 13 (value -> SHORT .)
-    SHORT           reduce using rule 13 (value -> SHORT .)
-    DOUBLE          reduce using rule 13 (value -> SHORT .)
-    LONG            reduce using rule 13 (value -> SHORT .)
-    INTEGER         reduce using rule 13 (value -> SHORT .)
-    LBRACE          reduce using rule 13 (value -> SHORT .)
-    LBRACKET        reduce using rule 13 (value -> SHORT .)
+    RBRACE          reduce using rule 13 (value -> BYTE .)
+    COMMA           reduce using rule 13 (value -> BYTE .)
+    NAME            reduce using rule 13 (value -> BYTE .)
+    STRING          reduce using rule 13 (value -> BYTE .)
+    RBRACKET        reduce using rule 13 (value -> BYTE .)
+    BOOL            reduce using rule 13 (value -> BYTE .)
+    BYTE            reduce using rule 13 (value -> BYTE .)
+    SHORT           reduce using rule 13 (value -> BYTE .)
+    DOUBLE          reduce using rule 13 (value -> BYTE .)
+    LONG            reduce using rule 13 (value -> BYTE .)
+    INTEGER         reduce using rule 13 (value -> BYTE .)
+    LBRACE          reduce using rule 13 (value -> BYTE .)
+    LBRACKET        reduce using rule 13 (value -> BYTE .)
 
 
 state 21
 
-    (14) value -> DOUBLE .
+    (14) value -> SHORT .
 
-    RBRACE          reduce using rule 14 (value -> DOUBLE .)
-    COMMA           reduce using rule 14 (value -> DOUBLE .)
-    NAME            reduce using rule 14 (value -> DOUBLE .)
-    STRING          reduce using rule 14 (value -> DOUBLE .)
-    RBRACKET        reduce using rule 14 (value -> DOUBLE .)
-    BOOL            reduce using rule 14 (value -> DOUBLE .)
-    BYTE            reduce using rule 14 (value -> DOUBLE .)
-    SHORT           reduce using rule 14 (value -> DOUBLE .)
-    DOUBLE          reduce using rule 14 (value -> DOUBLE .)
-    LONG            reduce using rule 14 (value -> DOUBLE .)
-    INTEGER         reduce using rule 14 (value -> DOUBLE .)
-    LBRACE          reduce using rule 14 (value -> DOUBLE .)
-    LBRACKET        reduce using rule 14 (value -> DOUBLE .)
+    RBRACE          reduce using rule 14 (value -> SHORT .)
+    COMMA           reduce using rule 14 (value -> SHORT .)
+    NAME            reduce using rule 14 (value -> SHORT .)
+    STRING          reduce using rule 14 (value -> SHORT .)
+    RBRACKET        reduce using rule 14 (value -> SHORT .)
+    BOOL            reduce using rule 14 (value -> SHORT .)
+    BYTE            reduce using rule 14 (value -> SHORT .)
+    SHORT           reduce using rule 14 (value -> SHORT .)
+    DOUBLE          reduce using rule 14 (value -> SHORT .)
+    LONG            reduce using rule 14 (value -> SHORT .)
+    INTEGER         reduce using rule 14 (value -> SHORT .)
+    LBRACE          reduce using rule 14 (value -> SHORT .)
+    LBRACKET        reduce using rule 14 (value -> SHORT .)
 
 
 state 22
 
-    (15) value -> LONG .
+    (15) value -> DOUBLE .
 
-    RBRACE          reduce using rule 15 (value -> LONG .)
-    COMMA           reduce using rule 15 (value -> LONG .)
-    NAME            reduce using rule 15 (value -> LONG .)
-    STRING          reduce using rule 15 (value -> LONG .)
-    RBRACKET        reduce using rule 15 (value -> LONG .)
-    BOOL            reduce using rule 15 (value -> LONG .)
-    BYTE            reduce using rule 15 (value -> LONG .)
-    SHORT           reduce using rule 15 (value -> LONG .)
-    DOUBLE          reduce using rule 15 (value -> LONG .)
-    LONG            reduce using rule 15 (value -> LONG .)
-    INTEGER         reduce using rule 15 (value -> LONG .)
-    LBRACE          reduce using rule 15 (value -> LONG .)
-    LBRACKET        reduce using rule 15 (value -> LONG .)
+    RBRACE          reduce using rule 15 (value -> DOUBLE .)
+    COMMA           reduce using rule 15 (value -> DOUBLE .)
+    NAME            reduce using rule 15 (value -> DOUBLE .)
+    STRING          reduce using rule 15 (value -> DOUBLE .)
+    RBRACKET        reduce using rule 15 (value -> DOUBLE .)
+    BOOL            reduce using rule 15 (value -> DOUBLE .)
+    BYTE            reduce using rule 15 (value -> DOUBLE .)
+    SHORT           reduce using rule 15 (value -> DOUBLE .)
+    DOUBLE          reduce using rule 15 (value -> DOUBLE .)
+    LONG            reduce using rule 15 (value -> DOUBLE .)
+    INTEGER         reduce using rule 15 (value -> DOUBLE .)
+    LBRACE          reduce using rule 15 (value -> DOUBLE .)
+    LBRACKET        reduce using rule 15 (value -> DOUBLE .)
 
 
 state 23
 
-    (16) value -> INTEGER .
+    (16) value -> LONG .
 
-    RBRACE          reduce using rule 16 (value -> INTEGER .)
-    COMMA           reduce using rule 16 (value -> INTEGER .)
-    NAME            reduce using rule 16 (value -> INTEGER .)
-    STRING          reduce using rule 16 (value -> INTEGER .)
-    RBRACKET        reduce using rule 16 (value -> INTEGER .)
-    BOOL            reduce using rule 16 (value -> INTEGER .)
-    BYTE            reduce using rule 16 (value -> INTEGER .)
-    SHORT           reduce using rule 16 (value -> INTEGER .)
-    DOUBLE          reduce using rule 16 (value -> INTEGER .)
-    LONG            reduce using rule 16 (value -> INTEGER .)
-    INTEGER         reduce using rule 16 (value -> INTEGER .)
-    LBRACE          reduce using rule 16 (value -> INTEGER .)
-    LBRACKET        reduce using rule 16 (value -> INTEGER .)
+    RBRACE          reduce using rule 16 (value -> LONG .)
+    COMMA           reduce using rule 16 (value -> LONG .)
+    NAME            reduce using rule 16 (value -> LONG .)
+    STRING          reduce using rule 16 (value -> LONG .)
+    RBRACKET        reduce using rule 16 (value -> LONG .)
+    BOOL            reduce using rule 16 (value -> LONG .)
+    BYTE            reduce using rule 16 (value -> LONG .)
+    SHORT           reduce using rule 16 (value -> LONG .)
+    DOUBLE          reduce using rule 16 (value -> LONG .)
+    LONG            reduce using rule 16 (value -> LONG .)
+    INTEGER         reduce using rule 16 (value -> LONG .)
+    LBRACE          reduce using rule 16 (value -> LONG .)
+    LBRACKET        reduce using rule 16 (value -> LONG .)
 
 
 state 24
 
-    (17) value -> STRING .
+    (17) value -> INTEGER .
 
-    RBRACE          reduce using rule 17 (value -> STRING .)
-    COMMA           reduce using rule 17 (value -> STRING .)
-    NAME            reduce using rule 17 (value -> STRING .)
-    STRING          reduce using rule 17 (value -> STRING .)
-    RBRACKET        reduce using rule 17 (value -> STRING .)
-    BOOL            reduce using rule 17 (value -> STRING .)
-    BYTE            reduce using rule 17 (value -> STRING .)
-    SHORT           reduce using rule 17 (value -> STRING .)
-    DOUBLE          reduce using rule 17 (value -> STRING .)
-    LONG            reduce using rule 17 (value -> STRING .)
-    INTEGER         reduce using rule 17 (value -> STRING .)
-    LBRACE          reduce using rule 17 (value -> STRING .)
-    LBRACKET        reduce using rule 17 (value -> STRING .)
+    RBRACE          reduce using rule 17 (value -> INTEGER .)
+    COMMA           reduce using rule 17 (value -> INTEGER .)
+    NAME            reduce using rule 17 (value -> INTEGER .)
+    STRING          reduce using rule 17 (value -> INTEGER .)
+    RBRACKET        reduce using rule 17 (value -> INTEGER .)
+    BOOL            reduce using rule 17 (value -> INTEGER .)
+    BYTE            reduce using rule 17 (value -> INTEGER .)
+    SHORT           reduce using rule 17 (value -> INTEGER .)
+    DOUBLE          reduce using rule 17 (value -> INTEGER .)
+    LONG            reduce using rule 17 (value -> INTEGER .)
+    INTEGER         reduce using rule 17 (value -> INTEGER .)
+    LBRACE          reduce using rule 17 (value -> INTEGER .)
+    LBRACKET        reduce using rule 17 (value -> INTEGER .)
 
 
 state 25
 
-    (18) list -> LBRACKET . values RBRACKET
-    (19) list -> LBRACKET . RBRACKET
-    (20) values -> . values value
-    (21) values -> . values COMMA value
-    (22) values -> . value
-    (9) value -> . compound
-    (10) value -> . list
-    (11) value -> . BOOL
-    (12) value -> . BYTE
-    (13) value -> . SHORT
-    (14) value -> . DOUBLE
-    (15) value -> . LONG
-    (16) value -> . INTEGER
-    (17) value -> . STRING
-    (2) compound -> . LBRACE key_value_pairs RBRACE
-    (3) compound -> . LBRACE RBRACE
-    (18) list -> . LBRACKET values RBRACKET
-    (19) list -> . LBRACKET RBRACKET
+    (18) value -> STRING .
 
-    RBRACKET        shift and go to state 28
-    BOOL            shift and go to state 18
-    BYTE            shift and go to state 19
-    SHORT           shift and go to state 20
-    DOUBLE          shift and go to state 21
-    LONG            shift and go to state 22
-    INTEGER         shift and go to state 23
-    STRING          shift and go to state 24
-    LBRACE          shift and go to state 3
-    LBRACKET        shift and go to state 25
+    RBRACE          reduce using rule 18 (value -> STRING .)
+    COMMA           reduce using rule 18 (value -> STRING .)
+    NAME            reduce using rule 18 (value -> STRING .)
+    STRING          reduce using rule 18 (value -> STRING .)
+    RBRACKET        reduce using rule 18 (value -> STRING .)
+    BOOL            reduce using rule 18 (value -> STRING .)
+    BYTE            reduce using rule 18 (value -> STRING .)
+    SHORT           reduce using rule 18 (value -> STRING .)
+    DOUBLE          reduce using rule 18 (value -> STRING .)
+    LONG            reduce using rule 18 (value -> STRING .)
+    INTEGER         reduce using rule 18 (value -> STRING .)
+    LBRACE          reduce using rule 18 (value -> STRING .)
+    LBRACKET        reduce using rule 18 (value -> STRING .)
 
-    values                         shift and go to state 27
-    value                          shift and go to state 29
-    compound                       shift and go to state 16
-    list                           shift and go to state 17
 
 state 26
+
+    (19) list -> LBRACKET . values RBRACKET
+    (20) list -> LBRACKET . RBRACKET
+    (21) array -> LBRACKET . NAME SEMICOLON values RBRACKET
+    (22) array -> LBRACKET . NAME SEMICOLON RBRACKET
+    (23) values -> . values value
+    (24) values -> . values COMMA value
+    (25) values -> . value
+    (9) value -> . compound
+    (10) value -> . list
+    (11) value -> . array
+    (12) value -> . BOOL
+    (13) value -> . BYTE
+    (14) value -> . SHORT
+    (15) value -> . DOUBLE
+    (16) value -> . LONG
+    (17) value -> . INTEGER
+    (18) value -> . STRING
+    (2) compound -> . LBRACE key_value_pairs RBRACE
+    (3) compound -> . LBRACE RBRACE
+    (19) list -> . LBRACKET values RBRACKET
+    (20) list -> . LBRACKET RBRACKET
+    (21) array -> . LBRACKET NAME SEMICOLON values RBRACKET
+    (22) array -> . LBRACKET NAME SEMICOLON RBRACKET
+
+    RBRACKET        shift and go to state 29
+    NAME            shift and go to state 30
+    BOOL            shift and go to state 19
+    BYTE            shift and go to state 20
+    SHORT           shift and go to state 21
+    DOUBLE          shift and go to state 22
+    LONG            shift and go to state 23
+    INTEGER         shift and go to state 24
+    STRING          shift and go to state 25
+    LBRACE          shift and go to state 3
+    LBRACKET        shift and go to state 26
+
+    values                         shift and go to state 28
+    value                          shift and go to state 31
+    compound                       shift and go to state 16
+    list                           shift and go to state 17
+    array                          shift and go to state 18
+
+state 27
 
     (8) key_value_pair -> STRING COLON value .
 
@@ -498,157 +537,291 @@ state 26
     STRING          reduce using rule 8 (key_value_pair -> STRING COLON value .)
 
 
-state 27
-
-    (18) list -> LBRACKET values . RBRACKET
-    (20) values -> values . value
-    (21) values -> values . COMMA value
-    (9) value -> . compound
-    (10) value -> . list
-    (11) value -> . BOOL
-    (12) value -> . BYTE
-    (13) value -> . SHORT
-    (14) value -> . DOUBLE
-    (15) value -> . LONG
-    (16) value -> . INTEGER
-    (17) value -> . STRING
-    (2) compound -> . LBRACE key_value_pairs RBRACE
-    (3) compound -> . LBRACE RBRACE
-    (18) list -> . LBRACKET values RBRACKET
-    (19) list -> . LBRACKET RBRACKET
-
-    RBRACKET        shift and go to state 30
-    COMMA           shift and go to state 32
-    BOOL            shift and go to state 18
-    BYTE            shift and go to state 19
-    SHORT           shift and go to state 20
-    DOUBLE          shift and go to state 21
-    LONG            shift and go to state 22
-    INTEGER         shift and go to state 23
-    STRING          shift and go to state 24
-    LBRACE          shift and go to state 3
-    LBRACKET        shift and go to state 25
-
-    value                          shift and go to state 31
-    compound                       shift and go to state 16
-    list                           shift and go to state 17
-
 state 28
 
-    (19) list -> LBRACKET RBRACKET .
-
-    RBRACE          reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    COMMA           reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    NAME            reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    STRING          reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    RBRACKET        reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    BOOL            reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    BYTE            reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    SHORT           reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    DOUBLE          reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    LONG            reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    INTEGER         reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    LBRACE          reduce using rule 19 (list -> LBRACKET RBRACKET .)
-    LBRACKET        reduce using rule 19 (list -> LBRACKET RBRACKET .)
-
-
-state 29
-
-    (22) values -> value .
-
-    RBRACKET        reduce using rule 22 (values -> value .)
-    COMMA           reduce using rule 22 (values -> value .)
-    BOOL            reduce using rule 22 (values -> value .)
-    BYTE            reduce using rule 22 (values -> value .)
-    SHORT           reduce using rule 22 (values -> value .)
-    DOUBLE          reduce using rule 22 (values -> value .)
-    LONG            reduce using rule 22 (values -> value .)
-    INTEGER         reduce using rule 22 (values -> value .)
-    STRING          reduce using rule 22 (values -> value .)
-    LBRACE          reduce using rule 22 (values -> value .)
-    LBRACKET        reduce using rule 22 (values -> value .)
-
-
-state 30
-
-    (18) list -> LBRACKET values RBRACKET .
-
-    RBRACE          reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    COMMA           reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    NAME            reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    STRING          reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    RBRACKET        reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    BOOL            reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    BYTE            reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    SHORT           reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    DOUBLE          reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    LONG            reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    INTEGER         reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    LBRACE          reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-    LBRACKET        reduce using rule 18 (list -> LBRACKET values RBRACKET .)
-
-
-state 31
-
-    (20) values -> values value .
-
-    RBRACKET        reduce using rule 20 (values -> values value .)
-    COMMA           reduce using rule 20 (values -> values value .)
-    BOOL            reduce using rule 20 (values -> values value .)
-    BYTE            reduce using rule 20 (values -> values value .)
-    SHORT           reduce using rule 20 (values -> values value .)
-    DOUBLE          reduce using rule 20 (values -> values value .)
-    LONG            reduce using rule 20 (values -> values value .)
-    INTEGER         reduce using rule 20 (values -> values value .)
-    STRING          reduce using rule 20 (values -> values value .)
-    LBRACE          reduce using rule 20 (values -> values value .)
-    LBRACKET        reduce using rule 20 (values -> values value .)
-
-
-state 32
-
-    (21) values -> values COMMA . value
+    (19) list -> LBRACKET values . RBRACKET
+    (23) values -> values . value
+    (24) values -> values . COMMA value
     (9) value -> . compound
     (10) value -> . list
-    (11) value -> . BOOL
-    (12) value -> . BYTE
-    (13) value -> . SHORT
-    (14) value -> . DOUBLE
-    (15) value -> . LONG
-    (16) value -> . INTEGER
-    (17) value -> . STRING
+    (11) value -> . array
+    (12) value -> . BOOL
+    (13) value -> . BYTE
+    (14) value -> . SHORT
+    (15) value -> . DOUBLE
+    (16) value -> . LONG
+    (17) value -> . INTEGER
+    (18) value -> . STRING
     (2) compound -> . LBRACE key_value_pairs RBRACE
     (3) compound -> . LBRACE RBRACE
-    (18) list -> . LBRACKET values RBRACKET
-    (19) list -> . LBRACKET RBRACKET
+    (19) list -> . LBRACKET values RBRACKET
+    (20) list -> . LBRACKET RBRACKET
+    (21) array -> . LBRACKET NAME SEMICOLON values RBRACKET
+    (22) array -> . LBRACKET NAME SEMICOLON RBRACKET
 
-    BOOL            shift and go to state 18
-    BYTE            shift and go to state 19
-    SHORT           shift and go to state 20
-    DOUBLE          shift and go to state 21
-    LONG            shift and go to state 22
-    INTEGER         shift and go to state 23
-    STRING          shift and go to state 24
+    RBRACKET        shift and go to state 32
+    COMMA           shift and go to state 34
+    BOOL            shift and go to state 19
+    BYTE            shift and go to state 20
+    SHORT           shift and go to state 21
+    DOUBLE          shift and go to state 22
+    LONG            shift and go to state 23
+    INTEGER         shift and go to state 24
+    STRING          shift and go to state 25
     LBRACE          shift and go to state 3
-    LBRACKET        shift and go to state 25
+    LBRACKET        shift and go to state 26
 
     value                          shift and go to state 33
     compound                       shift and go to state 16
     list                           shift and go to state 17
+    array                          shift and go to state 18
+
+state 29
+
+    (20) list -> LBRACKET RBRACKET .
+
+    RBRACE          reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    COMMA           reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    NAME            reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    STRING          reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    RBRACKET        reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    BOOL            reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    BYTE            reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    SHORT           reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    DOUBLE          reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    LONG            reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    INTEGER         reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    LBRACE          reduce using rule 20 (list -> LBRACKET RBRACKET .)
+    LBRACKET        reduce using rule 20 (list -> LBRACKET RBRACKET .)
+
+
+state 30
+
+    (21) array -> LBRACKET NAME . SEMICOLON values RBRACKET
+    (22) array -> LBRACKET NAME . SEMICOLON RBRACKET
+
+    SEMICOLON       shift and go to state 35
+
+
+state 31
+
+    (25) values -> value .
+
+    RBRACKET        reduce using rule 25 (values -> value .)
+    COMMA           reduce using rule 25 (values -> value .)
+    BOOL            reduce using rule 25 (values -> value .)
+    BYTE            reduce using rule 25 (values -> value .)
+    SHORT           reduce using rule 25 (values -> value .)
+    DOUBLE          reduce using rule 25 (values -> value .)
+    LONG            reduce using rule 25 (values -> value .)
+    INTEGER         reduce using rule 25 (values -> value .)
+    STRING          reduce using rule 25 (values -> value .)
+    LBRACE          reduce using rule 25 (values -> value .)
+    LBRACKET        reduce using rule 25 (values -> value .)
+
+
+state 32
+
+    (19) list -> LBRACKET values RBRACKET .
+
+    RBRACE          reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    COMMA           reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    NAME            reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    STRING          reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    RBRACKET        reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    BOOL            reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    BYTE            reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    SHORT           reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    DOUBLE          reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    LONG            reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    INTEGER         reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    LBRACE          reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+    LBRACKET        reduce using rule 19 (list -> LBRACKET values RBRACKET .)
+
 
 state 33
 
-    (21) values -> values COMMA value .
+    (23) values -> values value .
 
-    RBRACKET        reduce using rule 21 (values -> values COMMA value .)
-    COMMA           reduce using rule 21 (values -> values COMMA value .)
-    BOOL            reduce using rule 21 (values -> values COMMA value .)
-    BYTE            reduce using rule 21 (values -> values COMMA value .)
-    SHORT           reduce using rule 21 (values -> values COMMA value .)
-    DOUBLE          reduce using rule 21 (values -> values COMMA value .)
-    LONG            reduce using rule 21 (values -> values COMMA value .)
-    INTEGER         reduce using rule 21 (values -> values COMMA value .)
-    STRING          reduce using rule 21 (values -> values COMMA value .)
-    LBRACE          reduce using rule 21 (values -> values COMMA value .)
-    LBRACKET        reduce using rule 21 (values -> values COMMA value .)
+    RBRACKET        reduce using rule 23 (values -> values value .)
+    COMMA           reduce using rule 23 (values -> values value .)
+    BOOL            reduce using rule 23 (values -> values value .)
+    BYTE            reduce using rule 23 (values -> values value .)
+    SHORT           reduce using rule 23 (values -> values value .)
+    DOUBLE          reduce using rule 23 (values -> values value .)
+    LONG            reduce using rule 23 (values -> values value .)
+    INTEGER         reduce using rule 23 (values -> values value .)
+    STRING          reduce using rule 23 (values -> values value .)
+    LBRACE          reduce using rule 23 (values -> values value .)
+    LBRACKET        reduce using rule 23 (values -> values value .)
+
+
+state 34
+
+    (24) values -> values COMMA . value
+    (9) value -> . compound
+    (10) value -> . list
+    (11) value -> . array
+    (12) value -> . BOOL
+    (13) value -> . BYTE
+    (14) value -> . SHORT
+    (15) value -> . DOUBLE
+    (16) value -> . LONG
+    (17) value -> . INTEGER
+    (18) value -> . STRING
+    (2) compound -> . LBRACE key_value_pairs RBRACE
+    (3) compound -> . LBRACE RBRACE
+    (19) list -> . LBRACKET values RBRACKET
+    (20) list -> . LBRACKET RBRACKET
+    (21) array -> . LBRACKET NAME SEMICOLON values RBRACKET
+    (22) array -> . LBRACKET NAME SEMICOLON RBRACKET
+
+    BOOL            shift and go to state 19
+    BYTE            shift and go to state 20
+    SHORT           shift and go to state 21
+    DOUBLE          shift and go to state 22
+    LONG            shift and go to state 23
+    INTEGER         shift and go to state 24
+    STRING          shift and go to state 25
+    LBRACE          shift and go to state 3
+    LBRACKET        shift and go to state 26
+
+    value                          shift and go to state 36
+    compound                       shift and go to state 16
+    list                           shift and go to state 17
+    array                          shift and go to state 18
+
+state 35
+
+    (21) array -> LBRACKET NAME SEMICOLON . values RBRACKET
+    (22) array -> LBRACKET NAME SEMICOLON . RBRACKET
+    (23) values -> . values value
+    (24) values -> . values COMMA value
+    (25) values -> . value
+    (9) value -> . compound
+    (10) value -> . list
+    (11) value -> . array
+    (12) value -> . BOOL
+    (13) value -> . BYTE
+    (14) value -> . SHORT
+    (15) value -> . DOUBLE
+    (16) value -> . LONG
+    (17) value -> . INTEGER
+    (18) value -> . STRING
+    (2) compound -> . LBRACE key_value_pairs RBRACE
+    (3) compound -> . LBRACE RBRACE
+    (19) list -> . LBRACKET values RBRACKET
+    (20) list -> . LBRACKET RBRACKET
+    (21) array -> . LBRACKET NAME SEMICOLON values RBRACKET
+    (22) array -> . LBRACKET NAME SEMICOLON RBRACKET
+
+    RBRACKET        shift and go to state 38
+    BOOL            shift and go to state 19
+    BYTE            shift and go to state 20
+    SHORT           shift and go to state 21
+    DOUBLE          shift and go to state 22
+    LONG            shift and go to state 23
+    INTEGER         shift and go to state 24
+    STRING          shift and go to state 25
+    LBRACE          shift and go to state 3
+    LBRACKET        shift and go to state 26
+
+    values                         shift and go to state 37
+    value                          shift and go to state 31
+    compound                       shift and go to state 16
+    list                           shift and go to state 17
+    array                          shift and go to state 18
+
+state 36
+
+    (24) values -> values COMMA value .
+
+    RBRACKET        reduce using rule 24 (values -> values COMMA value .)
+    COMMA           reduce using rule 24 (values -> values COMMA value .)
+    BOOL            reduce using rule 24 (values -> values COMMA value .)
+    BYTE            reduce using rule 24 (values -> values COMMA value .)
+    SHORT           reduce using rule 24 (values -> values COMMA value .)
+    DOUBLE          reduce using rule 24 (values -> values COMMA value .)
+    LONG            reduce using rule 24 (values -> values COMMA value .)
+    INTEGER         reduce using rule 24 (values -> values COMMA value .)
+    STRING          reduce using rule 24 (values -> values COMMA value .)
+    LBRACE          reduce using rule 24 (values -> values COMMA value .)
+    LBRACKET        reduce using rule 24 (values -> values COMMA value .)
+
+
+state 37
+
+    (21) array -> LBRACKET NAME SEMICOLON values . RBRACKET
+    (23) values -> values . value
+    (24) values -> values . COMMA value
+    (9) value -> . compound
+    (10) value -> . list
+    (11) value -> . array
+    (12) value -> . BOOL
+    (13) value -> . BYTE
+    (14) value -> . SHORT
+    (15) value -> . DOUBLE
+    (16) value -> . LONG
+    (17) value -> . INTEGER
+    (18) value -> . STRING
+    (2) compound -> . LBRACE key_value_pairs RBRACE
+    (3) compound -> . LBRACE RBRACE
+    (19) list -> . LBRACKET values RBRACKET
+    (20) list -> . LBRACKET RBRACKET
+    (21) array -> . LBRACKET NAME SEMICOLON values RBRACKET
+    (22) array -> . LBRACKET NAME SEMICOLON RBRACKET
+
+    RBRACKET        shift and go to state 39
+    COMMA           shift and go to state 34
+    BOOL            shift and go to state 19
+    BYTE            shift and go to state 20
+    SHORT           shift and go to state 21
+    DOUBLE          shift and go to state 22
+    LONG            shift and go to state 23
+    INTEGER         shift and go to state 24
+    STRING          shift and go to state 25
+    LBRACE          shift and go to state 3
+    LBRACKET        shift and go to state 26
+
+    value                          shift and go to state 33
+    compound                       shift and go to state 16
+    list                           shift and go to state 17
+    array                          shift and go to state 18
+
+state 38
+
+    (22) array -> LBRACKET NAME SEMICOLON RBRACKET .
+
+    RBRACE          reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    COMMA           reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    NAME            reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    STRING          reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    RBRACKET        reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    BOOL            reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    BYTE            reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    SHORT           reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    DOUBLE          reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    LONG            reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    INTEGER         reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    LBRACE          reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    LBRACKET        reduce using rule 22 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+
+
+state 39
+
+    (21) array -> LBRACKET NAME SEMICOLON values RBRACKET .
+
+    RBRACE          reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    COMMA           reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    NAME            reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    STRING          reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    RBRACKET        reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    BOOL            reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    BYTE            reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    SHORT           reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    DOUBLE          reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    LONG            reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    INTEGER         reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    LBRACE          reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    LBRACKET        reduce using rule 21 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
 

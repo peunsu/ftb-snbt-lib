@@ -97,12 +97,12 @@ class Writer:
             self.indent = self.prev_indent
             self.prev_indent = prev
             
-    def should_expand(self, tag: List | Compound) -> bool:
+    def should_expand(self, tag: List | Array | Compound) -> bool:
         return (
             self.indentation is not None
             and (
                 not self.prev_indent
-                or isinstance(tag, (List, Compound))
+                or isinstance(tag, (List, Array, Compound))
             )
         )
 
@@ -130,6 +130,20 @@ class Writer:
     
     def write_list(self, tag: List) -> str:
         separator, fmt = "\n", "[{}]"
+
+        if len(tag) == 0:
+            return fmt.format(" ")
+        if len(tag) == 1:
+            return fmt.format(self.write(tag[0]))
+        
+        with self.depth():
+            if self.should_expand(tag):
+                separator, fmt = self.expand(fmt)
+
+            return fmt.format(separator.join(map(self.write, tag)))
+        
+    def write_array(self, tag: Array) -> str:
+        separator, fmt = "\n", f"[{tag.array_prefix};{{}}]"
 
         if len(tag) == 0:
             return fmt.format(" ")

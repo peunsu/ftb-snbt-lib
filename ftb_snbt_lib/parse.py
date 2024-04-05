@@ -35,6 +35,7 @@ def p_key_value_pair(p):
 def p_value(p):
     """value : compound
                 | list
+                | array
                 | BOOL
                 | BYTE
                 | SHORT
@@ -51,6 +52,14 @@ def p_list(p):
         p[0] = List()
     else:
         p[0] = List(p[2])
+
+def p_array(p):
+    """array : LBRACKET NAME SEMICOLON values RBRACKET
+                | LBRACKET NAME SEMICOLON RBRACKET"""
+    if len(p) == 4:
+        p[0] = Array(p[2], [])
+    else:
+        p[0] = Array(p[2], p[4])
 
 def p_values(p):
     """values : values value
