@@ -9,6 +9,7 @@ tokens = (
     "BOOL",
     "BYTE",
     "SHORT",
+    "FLOAT",
     "DOUBLE",
     "LONG",
     "INTEGER",
@@ -58,6 +59,11 @@ def t_BYTE(t):
 def t_SHORT(t):
     r'\-?[0-9]+s'
     t.value = Short(t.value[:-1])
+    return t
+
+def t_FLOAT(t):
+    r'\-?[0-9]+\.[0-9]+f'
+    t.value = Float(t.value[:-1])
     return t
 
 def t_DOUBLE(t):

@@ -39,6 +39,7 @@ def p_value(p):
                 | BOOL
                 | BYTE
                 | SHORT
+                | FLOAT
                 | DOUBLE
                 | LONG
                 | INTEGER
