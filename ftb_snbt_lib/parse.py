@@ -83,8 +83,8 @@ def get_parser():
     
     Example
     -------
-        >>> import ftb_snbt
-        >>> parser = ftb_snbt.get_parser()
+        >>> import ftb_snbt_lib as slib
+        >>> parser = slib.get_parser()
         >>> snbt = parser.parse('''
             {
                 some_tag: "some_value"
@@ -99,7 +99,7 @@ def get_parser():
 def loads(s: str) -> Compound:
     """Load an FTB snbt string and return the result as a Compound object.
     
-    The loaded SNBT object consists of custom types: ``Compound``, ``List``, ``Numeric``, ``Bool``, and ``String``.
+    The loaded SNBT object consists of custom types: ``Compound``, ``List``, ``Array``, ``Numeric``, ``Bool``, and ``String``.
     
     When modifying the loaded object, use the provided custom types to ensure that the object is valid.
 
@@ -113,8 +113,8 @@ def loads(s: str) -> Compound:
         
     Example
     -------
-        >>> import ftb_snbt
-        >>> snbt = ftb_snbt.loads('''
+        >>> import ftb_snbt_lib as slib
+        >>> snbt = slib.loads('''
             {
                 some_tag: "some_value"
                 another_tag: 1b
@@ -130,7 +130,7 @@ def load(fp) -> Compound:
     """    
     Load an FTB snbt file and return the result as a Compound object.
     
-    The loaded SNBT object consists of custom types: ``Compound``, ``List``, ``Numeric``, ``Bool``, and ``String``.
+    The loaded SNBT object consists of custom types: ``Compound``, ``List``, ``Array``, ``Numeric``, ``Bool``, and ``String``.
     
     When modifying the loaded object, use the provided custom types to ensure that the object is valid.
 
@@ -144,10 +144,10 @@ def load(fp) -> Compound:
         
     Example
     -------
-        >>> import ftb_snbt
-        >>> snbt = ftb_snbt.load(open("path/to/file/some_file.snbt", "r", encoding="utf-8"))
+        >>> import ftb_snbt_lib as slib
+        >>> snbt = slib.load(open("path/to/file/some_file.snbt", "r", encoding="utf-8"))
         >>> type(snbt)
-        <class 'ftb_snbt.tag.Compound'>
+        <class 'ftb_snbt_lib.tag.Compound'>
     """
     parser = get_parser()
     return parser.parse(fp.read())
