@@ -62,12 +62,12 @@ def t_SHORT(t):
     return t
 
 def t_FLOAT(t):
-    r'\-?[0-9]+\.[0-9]+f'
+    r'\-?[0-9]+(?:\.[0-9]+)?(?:[eE][\+\-]?[0-9]+)?f'
     t.value = Float(t.value[:-1])
     return t
 
 def t_DOUBLE(t):
-    r'\-?[0-9]+\.[0-9]+d'
+    r'\-?[0-9]+(?:\.[0-9]+)?(?:[eE][\+\-]?[0-9]+)?d'
     t.value = Double(t.value[:-1])
     return t
 

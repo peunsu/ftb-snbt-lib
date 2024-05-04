@@ -13,8 +13,8 @@ def get_writer():
     
     Example
     -------
-        >>> import ftb_snbt
-        >>> writer = ftb_snbt.get_writer()
+        >>> import ftb_snbt_lib as slib
+        >>> writer = slib.get_writer()
         >>> snbt = Compound({
         ...     'some_tag': String('some_value'),
         ...     'another_tag': Byte(1)
@@ -45,12 +45,12 @@ def dumps(tag: Base) -> str:
         
     Example
     -------
-        >>> import ftb_snbt
+        >>> import ftb_snbt_lib as slib
         >>> snbt = Compound({
         ...     'some_tag': String('some_value'),
         ...     'another_tag': Byte(1)
         ... })
-        >>> dumped_snbt = ftb_snbt.dumps(snbt)
+        >>> dumped_snbt = slib.dumps(snbt)
         >>> print(dumped_snbt)
         {
             some_tag: "some_value"
@@ -69,12 +69,12 @@ def dump(tag: Base, fp) -> None:
     
     Example
     -------
-        >>> import ftb_snbt
+        >>> import ftb_snbt_lib as slib
         >>> snbt = Compound({
         ...     'some_tag': String('some_value'),
         ...     'another_tag': Byte(1)
         ... })
-        >>> ftb_snbt.dump(snbt, open('some_file.snbt', 'w', encoding='utf-8'))
+        >>> slib.dump(snbt, open('some_file.snbt', 'w', encoding='utf-8'))
     """
     fp.write(dumps(tag))
 
