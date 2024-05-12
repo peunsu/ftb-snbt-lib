@@ -15,6 +15,7 @@ tokens = (
     "INTEGER",
     "STRING",
     "NAME",
+    "TYPE",
     "COLON",
     "SEMICOLON",
     "COMMA",
@@ -22,33 +23,18 @@ tokens = (
 
 t_ignore = ' \t\r'
 
-def t_newline(t):
-    r'\n'
-    t.lexer.lineno += 1
-
-def t_LBRACE(t):
-    r'\{'
-    t.lexer.level += 1
-    return t
-
-def t_RBRACE(t):
-    r'\}'
-    t.lexer.level -= 1
-    return t
-
-def t_LBRACKET(t):
-    r'\['
-    t.lexer.level += 1
-    return t
-
-def t_RBRACKET(t):
-    r'\]'
-    t.lexer.level -= 1
-    return t
-
 def t_BOOL(t):
     r'true|false'
     t.value = Bool(t.value == "true")
+    return t
+
+def t_NAME(t):    
+    r'[a-zA-Z0-9._+-]+(?=:)'
+    return t
+
+def t_STRING(t):
+    r'\"[^\"\\]*(?:\\.[^\"\\]*)*\"'
+    t.value = String(t.value[1:-1].replace(r'\"', '"').replace(r'\\', '\\'))
     return t
 
 def t_BYTE(t):
@@ -81,13 +67,32 @@ def t_INTEGER(t):
     t.value = Integer(t.value)
     return t
 
-def t_STRING(t):
-    r'\"[^\"\\]*(?:\\.[^\"\\]*)*\"'
-    t.value = String(t.value[1:-1].replace(r'\"', '"').replace(r'\\', '\\'))
+def t_TYPE(t):
+    r'[BIL]+(?=;)'
     return t
 
-def t_NAME(t):    
-    r'[a-zA-Z0-9._+-]+'
+def t_newline(t):
+    r'\n'
+    t.lexer.lineno += 1
+
+def t_LBRACE(t):
+    r'\{'
+    t.lexer.level += 1
+    return t
+
+def t_RBRACE(t):
+    r'\}'
+    t.lexer.level -= 1
+    return t
+
+def t_LBRACKET(t):
+    r'\['
+    t.lexer.level += 1
+    return t
+
+def t_RBRACKET(t):
+    r'\]'
+    t.lexer.level -= 1
     return t
 
 def t_COLON(t):

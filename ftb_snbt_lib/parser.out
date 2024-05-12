@@ -24,8 +24,8 @@ Rule 18    value -> INTEGER
 Rule 19    value -> STRING
 Rule 20    list -> LBRACKET values RBRACKET
 Rule 21    list -> LBRACKET RBRACKET
-Rule 22    array -> LBRACKET NAME SEMICOLON values RBRACKET
-Rule 23    array -> LBRACKET NAME SEMICOLON RBRACKET
+Rule 22    array -> LBRACKET TYPE SEMICOLON values RBRACKET
+Rule 23    array -> LBRACKET TYPE SEMICOLON RBRACKET
 Rule 24    values -> values value
 Rule 25    values -> values COMMA value
 Rule 26    values -> value
@@ -42,12 +42,13 @@ INTEGER              : 18
 LBRACE               : 2 3
 LBRACKET             : 20 21 22 23
 LONG                 : 17
-NAME                 : 7 22 23
+NAME                 : 7
 RBRACE               : 2 3
 RBRACKET             : 20 21 22 23
 SEMICOLON            : 22 23
 SHORT                : 14
 STRING               : 8 19
+TYPE                 : 22 23
 error                : 
 
 Nonterminals, with rules where they appear
@@ -225,8 +226,8 @@ state 12
     (3) compound -> . LBRACE RBRACE
     (20) list -> . LBRACKET values RBRACKET
     (21) list -> . LBRACKET RBRACKET
-    (22) array -> . LBRACKET NAME SEMICOLON values RBRACKET
-    (23) array -> . LBRACKET NAME SEMICOLON RBRACKET
+    (22) array -> . LBRACKET TYPE SEMICOLON values RBRACKET
+    (23) array -> . LBRACKET TYPE SEMICOLON RBRACKET
 
     BOOL            shift and go to state 19
     BYTE            shift and go to state 20
@@ -262,8 +263,8 @@ state 13
     (3) compound -> . LBRACE RBRACE
     (20) list -> . LBRACKET values RBRACKET
     (21) list -> . LBRACKET RBRACKET
-    (22) array -> . LBRACKET NAME SEMICOLON values RBRACKET
-    (23) array -> . LBRACKET NAME SEMICOLON RBRACKET
+    (22) array -> . LBRACKET TYPE SEMICOLON values RBRACKET
+    (23) array -> . LBRACKET TYPE SEMICOLON RBRACKET
 
     BOOL            shift and go to state 19
     BYTE            shift and go to state 20
@@ -525,8 +526,8 @@ state 27
 
     (20) list -> LBRACKET . values RBRACKET
     (21) list -> LBRACKET . RBRACKET
-    (22) array -> LBRACKET . NAME SEMICOLON values RBRACKET
-    (23) array -> LBRACKET . NAME SEMICOLON RBRACKET
+    (22) array -> LBRACKET . TYPE SEMICOLON values RBRACKET
+    (23) array -> LBRACKET . TYPE SEMICOLON RBRACKET
     (24) values -> . values value
     (25) values -> . values COMMA value
     (26) values -> . value
@@ -545,11 +546,11 @@ state 27
     (3) compound -> . LBRACE RBRACE
     (20) list -> . LBRACKET values RBRACKET
     (21) list -> . LBRACKET RBRACKET
-    (22) array -> . LBRACKET NAME SEMICOLON values RBRACKET
-    (23) array -> . LBRACKET NAME SEMICOLON RBRACKET
+    (22) array -> . LBRACKET TYPE SEMICOLON values RBRACKET
+    (23) array -> . LBRACKET TYPE SEMICOLON RBRACKET
 
     RBRACKET        shift and go to state 30
-    NAME            shift and go to state 31
+    TYPE            shift and go to state 31
     BOOL            shift and go to state 19
     BYTE            shift and go to state 20
     SHORT           shift and go to state 21
@@ -597,8 +598,8 @@ state 29
     (3) compound -> . LBRACE RBRACE
     (20) list -> . LBRACKET values RBRACKET
     (21) list -> . LBRACKET RBRACKET
-    (22) array -> . LBRACKET NAME SEMICOLON values RBRACKET
-    (23) array -> . LBRACKET NAME SEMICOLON RBRACKET
+    (22) array -> . LBRACKET TYPE SEMICOLON values RBRACKET
+    (23) array -> . LBRACKET TYPE SEMICOLON RBRACKET
 
     RBRACKET        shift and go to state 33
     COMMA           shift and go to state 35
@@ -640,8 +641,8 @@ state 30
 
 state 31
 
-    (22) array -> LBRACKET NAME . SEMICOLON values RBRACKET
-    (23) array -> LBRACKET NAME . SEMICOLON RBRACKET
+    (22) array -> LBRACKET TYPE . SEMICOLON values RBRACKET
+    (23) array -> LBRACKET TYPE . SEMICOLON RBRACKET
 
     SEMICOLON       shift and go to state 36
 
@@ -720,8 +721,8 @@ state 35
     (3) compound -> . LBRACE RBRACE
     (20) list -> . LBRACKET values RBRACKET
     (21) list -> . LBRACKET RBRACKET
-    (22) array -> . LBRACKET NAME SEMICOLON values RBRACKET
-    (23) array -> . LBRACKET NAME SEMICOLON RBRACKET
+    (22) array -> . LBRACKET TYPE SEMICOLON values RBRACKET
+    (23) array -> . LBRACKET TYPE SEMICOLON RBRACKET
 
     BOOL            shift and go to state 19
     BYTE            shift and go to state 20
@@ -741,8 +742,8 @@ state 35
 
 state 36
 
-    (22) array -> LBRACKET NAME SEMICOLON . values RBRACKET
-    (23) array -> LBRACKET NAME SEMICOLON . RBRACKET
+    (22) array -> LBRACKET TYPE SEMICOLON . values RBRACKET
+    (23) array -> LBRACKET TYPE SEMICOLON . RBRACKET
     (24) values -> . values value
     (25) values -> . values COMMA value
     (26) values -> . value
@@ -761,8 +762,8 @@ state 36
     (3) compound -> . LBRACE RBRACE
     (20) list -> . LBRACKET values RBRACKET
     (21) list -> . LBRACKET RBRACKET
-    (22) array -> . LBRACKET NAME SEMICOLON values RBRACKET
-    (23) array -> . LBRACKET NAME SEMICOLON RBRACKET
+    (22) array -> . LBRACKET TYPE SEMICOLON values RBRACKET
+    (23) array -> . LBRACKET TYPE SEMICOLON RBRACKET
 
     RBRACKET        shift and go to state 39
     BOOL            shift and go to state 19
@@ -802,7 +803,7 @@ state 37
 
 state 38
 
-    (22) array -> LBRACKET NAME SEMICOLON values . RBRACKET
+    (22) array -> LBRACKET TYPE SEMICOLON values . RBRACKET
     (24) values -> values . value
     (25) values -> values . COMMA value
     (9) value -> . compound
@@ -820,8 +821,8 @@ state 38
     (3) compound -> . LBRACE RBRACE
     (20) list -> . LBRACKET values RBRACKET
     (21) list -> . LBRACKET RBRACKET
-    (22) array -> . LBRACKET NAME SEMICOLON values RBRACKET
-    (23) array -> . LBRACKET NAME SEMICOLON RBRACKET
+    (22) array -> . LBRACKET TYPE SEMICOLON values RBRACKET
+    (23) array -> . LBRACKET TYPE SEMICOLON RBRACKET
 
     RBRACKET        shift and go to state 40
     COMMA           shift and go to state 35
@@ -843,40 +844,40 @@ state 38
 
 state 39
 
-    (23) array -> LBRACKET NAME SEMICOLON RBRACKET .
+    (23) array -> LBRACKET TYPE SEMICOLON RBRACKET .
 
-    RBRACE          reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    COMMA           reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    NAME            reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    STRING          reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    RBRACKET        reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    BOOL            reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    BYTE            reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    SHORT           reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    FLOAT           reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    DOUBLE          reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    LONG            reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    INTEGER         reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    LBRACE          reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
-    LBRACKET        reduce using rule 23 (array -> LBRACKET NAME SEMICOLON RBRACKET .)
+    RBRACE          reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    COMMA           reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    NAME            reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    STRING          reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    RBRACKET        reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    BOOL            reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    BYTE            reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    SHORT           reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    FLOAT           reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    DOUBLE          reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    LONG            reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    INTEGER         reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    LBRACE          reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
+    LBRACKET        reduce using rule 23 (array -> LBRACKET TYPE SEMICOLON RBRACKET .)
 
 
 state 40
 
-    (22) array -> LBRACKET NAME SEMICOLON values RBRACKET .
+    (22) array -> LBRACKET TYPE SEMICOLON values RBRACKET .
 
-    RBRACE          reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    COMMA           reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    NAME            reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    STRING          reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    RBRACKET        reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    BOOL            reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    BYTE            reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    SHORT           reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    FLOAT           reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    DOUBLE          reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    LONG            reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    INTEGER         reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    LBRACE          reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
-    LBRACKET        reduce using rule 22 (array -> LBRACKET NAME SEMICOLON values RBRACKET .)
+    RBRACE          reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    COMMA           reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    NAME            reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    STRING          reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    RBRACKET        reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    BOOL            reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    BYTE            reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    SHORT           reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    FLOAT           reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    DOUBLE          reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    LONG            reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    INTEGER         reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    LBRACE          reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
+    LBRACKET        reduce using rule 22 (array -> LBRACKET TYPE SEMICOLON values RBRACKET .)
 
