@@ -57,7 +57,7 @@ def p_list(p):
 def p_array(p):
     """array : LBRACKET TYPE SEMICOLON values RBRACKET
                 | LBRACKET TYPE SEMICOLON RBRACKET"""
-    if len(p) == 4:
+    if len(p) == 5:
         p[0] = Array(p[2], [])
     else:
         p[0] = Array(p[2], p[4])
