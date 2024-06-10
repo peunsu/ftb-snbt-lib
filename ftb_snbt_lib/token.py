@@ -22,6 +22,7 @@ tokens = (
 )
 
 t_ignore = ' \t\r'
+t_ignore_COMMENT = r'\#.*'
 
 def t_BOOL(t):
     r'true|false'

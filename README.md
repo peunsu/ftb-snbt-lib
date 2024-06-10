@@ -7,6 +7,7 @@
 The FTB snbt tag is a variant of the "vanilla" snbt tag. It has no commas at end of lines, different suffixes for numeric values, and no support for array data type.
 
 This is the example of the FTB snbt tag:
+
 ```python
 {
     some_tag: "some_value"
@@ -22,36 +23,57 @@ This is the example of the FTB snbt tag:
 **This library is only for the FTB snbt tag**. If you are finding the snbt library for the "vanilla" snbt tag, use [nbtlib](https://github.com/vberlier/nbtlib) by [vberlier](https://github.com/vberlier).
 
 ## Installation
+
 The package can be installed with ``pip``.
+
 ```bash
 $ pip install ftb-snbt-lib
 ```
 
 ## Getting Started
+
 * Import the library.
+
 ```python
 >>> import ftb_snbt_lib as slib
 ```
 
-* ``load(fp)``: Load the ftb snbt tag from a file (``fp``).
+* ``load(fp)``: Load the ftb snbt tag from a file (``fp``).<br>
+The type of returned value is ``Compound``, a dictionary-like object.<br>
+The ``Compound`` is containing values with **[tag data types](#data-types)** provided by this library.
+
 ```python
 >>> some_snbt = slib.load(open("tests/some_file.snbt", "r", encoding="utf-8"))
-```
-* The type of returned value is ``Compound``, a dictionary-like object.<br>
-The ``Compound`` is containing values with **[tag data types](#data-types)** provided by this library.
-```python
 >>> type(some_snbt)
 <class 'ftb_snbt_lib.tag.Compound'>
 >>> print(some_snbt)
 Compound({'some_tag': String('some_value'), 'another_tag': Byte(1)})
 ```
 
-* ``dump(tag, fp)``: Dump the ftb snbt tag to a file (``fp``).
+* ``dump(tag, fp, comma_sep=False)``: Dump the ftb snbt tag to a file (``fp``).<br>
+If you set ``comma_sep`` parameter to ``True``, the output snbt has comma separator ``,\n`` instead of non-comma separator ``\n``.
+
 ```python
 >>> slib.dump(some_snbt, open("tests/some_file_copy.snbt", "w", encoding="utf-8"))
+# File Output:
+# {
+#    some_tag: "some_value"
+#    another_tag: 1b
+# }
 ```
 
-* ``loads(s)``: Load the ftb snbt tag from a string ``s``.
+```python
+>>> slib.dump(some_snbt, open("tests/some_file_copy.snbt", "w", encoding="utf-8"), comma_sep=True)
+# File Output:
+# {
+#    some_tag: "some_value",
+#    another_tag: 1b
+# }
+```
+
+* ``loads(s)``: Load the ftb snbt tag from a string ``s``.<br>
+The type of returned value is ``Compound``.
+
 ```python
 >>> another_snbt = slib.loads('''
 ... {
@@ -59,9 +81,15 @@ Compound({'some_tag': String('some_value'), 'another_tag': Byte(1)})
 ...     another_tag: 1b
 ... }
 ... ''')
+>>> type(another_snbt)
+<class 'ftb_snbt_lib.tag.Compound'>
+>>> print(another_snbt)
+Compound({'some_tag': String('some_value'), 'another_tag': Byte(1)})
 ```
 
-* ``dumps(tag)``: Dump the ftb snbt tag to a string.
+* ``dumps(tag, comma_sep=False)``: Dump the ftb snbt tag to a string.<br>
+If you set ``comma_sep`` parameter to ``True``, the output snbt has comma separator ``,\n`` instead of non-comma separator ``\n``.
+
 ```python
 >>> dumped_snbt = slib.dumps(another_snbt)
 >>> print(dumped_snbt)
@@ -71,8 +99,18 @@ Compound({'some_tag': String('some_value'), 'another_tag': Byte(1)})
 }
 ```
 
+```python
+>>> dumped_snbt = slib.dumps(another_snbt, comma_sep=True)
+>>> print(dumped_snbt)
+{
+    some_tag: "some_value",
+    another_tag: 1b
+}
+```
+
 * Edit the snbt tag. As its type is ``Compound``, it can be edited like a dictionary.<br>
 The inserted or replace values should be any of **[tag data types](#data-types)** provided by this library.
+
 ```python
 >>> another_snbt["some_tag"] = slib.String("another_value")
 ```
@@ -84,12 +122,14 @@ For instance, ``List[Byte(1), Byte(2), Byte(3)]`` must contain **only** the ``By
 For instance, ``IntArray`` with a length of 3 must contain **three** ``Integer`` type objects, so **adding new objects, removing existing objects, and replacing with other type objects are not allowed**.
 
 * Save the edited snbt tag to a json file.
+
 ```python
 >>> import json
 >>> json.dump(another_snbt, open("tests/test.json", "w", encoding="utf-8"), indent=4, ensure_ascii=False)
 ```
 
 ## Data Types
+
 | Type | Description | Format | Example |
 | - | - | - | - |
 | Byte | A signed 8-bit integer.<br>Range: ``-128`` ~ ``127`` | ``<number>b`` | ``12b``, ``-35b`` |
@@ -105,6 +145,7 @@ For instance, ``IntArray`` with a length of 3 must contain **three** ``Integer``
 | Compound | An ordered list of attribute-value pairs.<br>Each tag can be of **any type**. | Named tags enclosed in curly braces and delimited by commas or **newline** characters (``\n``).<br>The key (tag name) can be unquoted if it contains only ``0-9``, ``A-Z``, ``a-z``, ``_``, ``-``, ``.``, and ``+``. Otherwise the key should be quoted, using the format of ``String`` type. | <pre>[<br>    tag1: "string"<br>    tag2: 12b<br>    \"quoted:tag\": 3.5d<br>    ...<br>]</pre> |
 
 ## References
+
 * [PLY - Python Lex-Yacc](https://github.com/dabeaz/ply) by [David Beazley](https://www.dabeaz.com)
 * [nbtlib](https://github.com/vberlier/nbtlib) by [vberlier](https://github.com/vberlier)
 * [NBT format - Minecraft Wiki (fandom)](https://minecraft.fandom.com/wiki/NBT_format)
