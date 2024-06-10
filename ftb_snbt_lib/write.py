@@ -8,82 +8,15 @@ ESCAPE_SUBS = {
     '"': '\\"'
 }
 
-def get_writer():
-    """Get the FTB snbt writer object.
-    
-    Example
-    -------
-        >>> import ftb_snbt_lib as slib
-        >>> writer = slib.get_writer()
-        >>> snbt = Compound({
-        ...     'some_tag': String('some_value'),
-        ...     'another_tag': Byte(1)
-        ... })
-        >>> dumped_snbt = writer.write(snbt)
-        >>> print(dumped_snbt)
-        {
-            some_tag: "some_value"
-            another_tag: 1b
-        }
-    """
-    return Writer()
-
-def dumps(tag: Base) -> str:
-    """Dump an FTB snbt tag to a string.
-    
-    A tag can be a ``Compound``, ``List``, ``Numeric``, ``Bool``, or ``String`` object.
-    
-    The returned string can be written to a file or sent over a network.
-
-    Args
-    ----
-        tag (Base): The FTB snbt tag to dump.
-
-    Returns
-    -------
-        str: The dumped FTB snbt string.
-        
-    Example
-    -------
-        >>> import ftb_snbt_lib as slib
-        >>> snbt = Compound({
-        ...     'some_tag': String('some_value'),
-        ...     'another_tag': Byte(1)
-        ... })
-        >>> dumped_snbt = slib.dumps(snbt)
-        >>> print(dumped_snbt)
-        {
-            some_tag: "some_value"
-            another_tag: 1b
-        }
-    """
-    return get_writer().write(tag) + "\n"
-
-def dump(tag: Base, fp) -> None:
-    """Dump an FTB snbt tag to a file.
-
-    Args
-    ----
-        tag (Base): The FTB snbt tag to dump.
-        fp (io.TextIOWrapper): The file to write the FTB snbt tag to (opened in writing text mode with a UTF-8 encoding.)
-    
-    Example
-    -------
-        >>> import ftb_snbt_lib as slib
-        >>> snbt = Compound({
-        ...     'some_tag': String('some_value'),
-        ...     'another_tag': Byte(1)
-        ... })
-        >>> slib.dump(snbt, open('some_file.snbt', 'w', encoding='utf-8'))
-    """
-    fp.write(dumps(tag))
-
 class Writer:
-    def __init__(self):
+    def __init__(self, comma_sep: bool = False):
         self.indentation = "\t"
-        
         self.indent = ""
         self.prev_indent = ""
+        
+        self.separator = "\n"
+        if comma_sep:
+            self.separator = "," + self.separator
         
     @contextmanager
     def depth(self):
@@ -106,9 +39,9 @@ class Writer:
             )
         )
 
-    def expand(self, fmt: str) -> tuple[str, str]:
+    def expand(self, separator: str, fmt: str) -> tuple[str, str]:
         return (
-            f"\n{self.indent}",
+            f"{separator}{self.indent}",
             fmt.replace("{}", f"\n{self.indent}{{}}\n{self.prev_indent}"),
         )
 
@@ -129,7 +62,7 @@ class Writer:
         return f'"{tag}"'
     
     def write_list(self, tag: List) -> str:
-        separator, fmt = "\n", "[{}]"
+        separator, fmt = self.separator, "[{}]"
 
         if len(tag) == 0:
             return fmt.format(" ")
@@ -138,12 +71,12 @@ class Writer:
         
         with self.depth():
             if self.should_expand(tag):
-                separator, fmt = self.expand(fmt)
+                separator, fmt = self.expand(separator, fmt)
 
             return fmt.format(separator.join(map(self.write, tag)))
         
     def write_array(self, tag: Array) -> str:
-        separator, fmt = "\n", f"[{tag.array_prefix};{{}}]"
+        separator, fmt = self.separator, f"[{tag.array_prefix};{{}}]"
 
         if len(tag) == 0:
             return fmt.format(" ")
@@ -152,19 +85,19 @@ class Writer:
         
         with self.depth():
             if self.should_expand(tag):
-                separator, fmt = self.expand(fmt)
+                separator, fmt = self.expand(separator, fmt)
 
             return fmt.format(separator.join(map(self.write, tag)))
     
     def write_compound(self, tag: Compound) -> str:
-        separator, fmt = "\n", "{{{}}}"
+        separator, fmt = self.separator, "{{{}}}"
 
         if len(tag) == 0:
             return fmt.format(" ")
         
         with self.depth():
             if self.should_expand(tag):
-                separator, fmt = self.expand(fmt)
+                separator, fmt = self.expand(separator, fmt)
 
             return fmt.format(
                 separator.join(
@@ -177,3 +110,83 @@ class Writer:
         if isinstance(key, String):
             return self.write_string(key)
         return key
+    
+def get_writer(comma_sep: bool = False) -> Writer:
+    """Get the FTB snbt writer object.
+    
+    Args
+    ----
+        comma_sep (bool): Whether to separate tags with commas.
+        
+    Returns
+    -------
+        Writer: The FTB snbt writer object.
+    
+    Example
+    -------
+        >>> import ftb_snbt_lib as slib
+        >>> writer = slib.get_writer()
+        >>> snbt = slib.Compound({
+        ...     'some_tag': slib.String('some_value'),
+        ...     'another_tag': slib.Byte(1)
+        ... })
+        >>> dumped_snbt = writer.write(snbt)
+        >>> print(dumped_snbt)
+        {
+            some_tag: "some_value"
+            another_tag: 1b
+        }
+    """
+    return Writer(comma_sep=comma_sep)
+
+def dumps(tag: Base, comma_sep: bool = False) -> str:
+    """Dump an FTB snbt tag to a string.
+    
+    A tag can be a ``Compound``, ``List``, ``Numeric``, ``Bool``, or ``String`` object.
+    
+    The returned string can be written to a file or sent over a network.
+
+    Args
+    ----
+        tag (Base): The FTB snbt tag to dump.
+        comma_sep (bool): Whether to separate tags with commas.
+
+    Returns
+    -------
+        str: The dumped FTB snbt string.
+        
+    Example
+    -------
+        >>> import ftb_snbt_lib as slib
+        >>> snbt = slib.Compound({
+        ...     'some_tag': slib.String('some_value'),
+        ...     'another_tag': slib.Byte(1)
+        ... })
+        >>> dumped_snbt = slib.dumps(snbt)
+        >>> print(dumped_snbt)
+        {
+            some_tag: "some_value"
+            another_tag: 1b
+        }
+    """
+    return get_writer(comma_sep=comma_sep).write(tag) + "\n"
+
+def dump(tag: Base, fp, comma_sep: bool = False) -> None:
+    """Dump an FTB snbt tag to a file.
+
+    Args
+    ----
+        tag (Base): The FTB snbt tag to dump.
+        fp (io.TextIOWrapper): The file to write the FTB snbt tag to (opened in writing text mode with a UTF-8 encoding.)
+        comma_sep (bool): Whether to separate tags with commas.
+    
+    Example
+    -------
+        >>> import ftb_snbt_lib as slib
+        >>> snbt = slib.Compound({
+        ...     'some_tag': slib.String('some_value'),
+        ...     'another_tag': slib.Byte(1)
+        ... })
+        >>> slib.dump(snbt, open('some_file.snbt', 'w', encoding='utf-8'))
+    """
+    fp.write(dumps(tag, comma_sep=comma_sep))
