@@ -4,9 +4,9 @@
 
 **A python library to parse, edit, and save FTB snbt tag.**
 
-The FTB snbt tag is a variant of the "vanilla" snbt tag. It has no commas at end of lines, different suffixes for numeric values, and no support for array data type.
+FTB snbt tag is a variant of the "vanilla" snbt tag, which uses newline(``\n``) instead of comma(``,``) as separator.
 
-This is the example of the FTB snbt tag:
+This is the example of FTB snbt tag:
 
 ```python
 {
@@ -20,7 +20,7 @@ This is the example of the FTB snbt tag:
 }
 ```
 
-**This library is only for the FTB snbt tag**. If you are finding the snbt library for the "vanilla" snbt tag, use [nbtlib](https://github.com/vberlier/nbtlib) by [vberlier](https://github.com/vberlier).
+**This library works with both FTB snbt tag and the vanilla snbt tag.** However, if you are finding the snbt library working perfectly for the "vanilla" snbt tag, use [nbtlib](https://github.com/vberlier/nbtlib) by [vberlier](https://github.com/vberlier).
 
 ## Installation
 
