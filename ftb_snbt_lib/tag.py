@@ -147,6 +147,9 @@ class List(Base, list):
     @classmethod
     def cast_item(cls, item):
         if cls.subtype is None:
+            # If subtype cannot be inferred, accept Base types as-is
+            if isinstance(item, Base):
+                return item
             raise InvalidTypeError(item, cls)
         
         if not isinstance(item, cls.subtype):
